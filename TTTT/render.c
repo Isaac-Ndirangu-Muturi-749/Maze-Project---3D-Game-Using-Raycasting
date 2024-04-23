@@ -1,22 +1,10 @@
 #include "render.h"
 
-void initRenderer(SDL_Renderer **renderer, int screenWidth, int screenHeight) {
-    // Implementation of renderer initialization
-}
-
-void renderFrame(SDL_Renderer *renderer, int playerX, int playerY, double playerAngle) {
-    // Implementation of frame rendering
-}
-
-
-
-
 
 /**
  * render - calls all functions needed for on-screen rendering
  *
 */
-
 void render_game(void)
 {
 	clearColorBuffer(0xFF000000);
@@ -30,11 +18,11 @@ void render_game(void)
 	renderColorBuffer();
 }
 
+
 /**
  * clearColorBuffer - clear buffer for every frame
  * @color: color buffer
 */
-
 void clearColorBuffer(color_t color)
 {
 	int i;
@@ -43,11 +31,11 @@ void clearColorBuffer(color_t color)
 		colorBuffer[i] = color;
 }
 
+
 /**
  * renderColorBuffer - render buffer for every frame
  *
 */
-
 void renderColorBuffer(void)
 {
 	SDL_UpdateTexture(
@@ -65,7 +53,6 @@ void renderColorBuffer(void)
  * renderMap - render the map
  *
 */
-
 void renderMap(void)
 {
 	int i, j, tileX, tileY;
@@ -95,7 +82,6 @@ void renderMap(void)
  * renderRays - draw all the rays
  *
  */
-
 void renderRays(void)
 {
 	int i;
@@ -117,7 +103,6 @@ void renderRays(void)
  * renderPlayer - render the player
  *
 */
-
 void renderPlayer(void)
 {
 	drawRect(
@@ -138,7 +123,6 @@ void renderPlayer(void)
  * @texelColor: texture color for current pixel
  * @x: current element in the rays array
 */
-
 void renderFloor(int wallBottomPixel, color_t *texelColor, int x)
 {
 	int y, texture_height, texture_width, textureOffsetY, textureOffsetX;
@@ -167,13 +151,13 @@ void renderFloor(int wallBottomPixel, color_t *texelColor, int x)
 	}
 }
 
+
 /**
  * renderCeil - render Ceil projection
  * @WallTopPixel: wall top pixel
  * @texelColor: texture color for current pixel
  * @x: current element in the rays array
 */
-
 void renderCeil(int wallTopPixel, color_t *texelColor, int x)
 {
 	int y, texture_width, texture_height, textureOffsetY, textureOffsetX;
@@ -203,6 +187,7 @@ void renderCeil(int wallTopPixel, color_t *texelColor, int x)
 
 	}
 }
+
 
 /**
  * renderWall - render wall projection

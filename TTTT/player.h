@@ -8,7 +8,11 @@ void movePlayer(int *playerX, int *playerY, double playerAngle);
 
 
 
-/* Functions-variables-structs for player */
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include <math.h>
+#include "collision.h" // Assuming DetectCollision is defined here
 
 /**
  * struct player_s - struct for the textures
@@ -22,7 +26,6 @@ void movePlayer(int *playerX, int *playerY, double playerAngle);
  * @walkSpeed: walk speed
  * @turnSpeed: turn speed
  */
-
 typedef struct player_s
 {
 	float x;
@@ -36,8 +39,10 @@ typedef struct player_s
 	float turnSpeed;
 } player_t;
 
-extern player_t player;
-
+// Function prototypes
 void movePlayer(float DeltaTime);
 
-bool DetectCollision(float x, float y);
+// External variable declaration
+extern player_t player;
+
+#endif /* PLAYER_H */

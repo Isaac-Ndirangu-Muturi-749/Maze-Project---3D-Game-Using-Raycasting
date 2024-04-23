@@ -1,9 +1,5 @@
 #include "raycast.h"
 
-void castRays() {
-    // Implementation of ray casting
-}
-
 ray_t rays[NUM_RAYS];
 
 static bool foundHorzWallHit, foundVertWallHit;
@@ -16,7 +12,6 @@ static int horzWallContent, vertWallContent;
  * @rayAngle: current ray angle
  * @stripId: ray strip identifier
  */
-
 void castRay(float rayAngle, int stripId)
 {
 	float horzHitDistance, vertHitDistance;
@@ -57,6 +52,7 @@ void castRay(float rayAngle, int stripId)
 
 }
 
+
 /**
  * castAllRays - cast of all rays
  *
@@ -80,33 +76,33 @@ void castAllRays(void)
  * @angle: current ray angle
  * Return: true or false
  */
-
 bool isRayFacingDown(float angle)
 {
 	return (angle > 0 && angle < PI);
 }
+
 
 /**
  * isRayFacingUp - check if the ray is facing up
  * @angle: current ray angle
  * Return: true or false
  */
-
 bool isRayFacingUp(float angle)
 {
 	return (!isRayFacingDown(angle));
 }
+
 
 /**
  * isRayFacingRight - check if the ray is facing to the right
  * @angle: current ray angle
  * Return: true or false
  */
-
 bool isRayFacingRight(float angle)
 {
 	return (angle < 0.5 * PI || angle > 1.5 * PI);
 }
+
 
 /**
  * isRayFacingLeft - check if the ray is facing to the right

@@ -10,10 +10,24 @@ void renderFrame(SDL_Renderer *renderer, int playerX, int playerY, double player
 #endif /* RENDER_H */
 
 
-void render_game(void);
 
-void renderMap(void);
+#ifndef RENDER_H
+#define RENDER_H
+
+#include "graphics.h"
+#include "player.h"
+#include "raycast.h"
+#include "map.h"
+
+// Function prototypes
+void render_game(void);
+void clearColorBuffer(color_t color);
 void renderColorBuffer(void);
+void renderMap(void);
+void renderRays(void);
 void renderPlayer(void);
 void renderWall(void);
-void clearColorBuffer(color_t color);
+void renderFloor(int wallBottomPixel, color_t *texelColor, int x);
+void renderCeil(int wallTopPixel, color_t *texelColor, int x);
+
+#endif /* RENDER_H */

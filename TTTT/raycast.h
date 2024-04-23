@@ -1,14 +1,22 @@
 #ifndef RAYCAST_H
 #define RAYCAST_H
 
+#include <stdbool.h>
+#include <math.h>
+#include <float.h>
+
+#define NUM_RAYS 100
+#define TWO_PI (2 * M_PI)
+#define PI M_PI
+#define PROJ_PLANE (NUM_COLS / 2 * tan(FOV_ANGLE / 2))
+
 // Function prototypes
-void castRays();
-
-#endif /* RAYCAST_H */
-
-
-
-/* Functions-variables-structs for ray */
+void castRay(float rayAngle, int stripId);
+void castAllRays(void);
+bool isRayFacingDown(float angle);
+bool isRayFacingUp(float angle);
+bool isRayFacingRight(float angle);
+bool isRayFacingLeft(float angle);
 
 /**
  * struct ray_s - struct for the textures
@@ -19,7 +27,6 @@ void castRays();
  * @wasHitVertical: verify hit vertical
  * @wallHitContent: wall hit content
  */
-
 typedef struct ray_s
 {
 	float rayAngle;
@@ -32,13 +39,4 @@ typedef struct ray_s
 
 extern ray_t rays[NUM_RAYS];
 
-float distanceBetweenPoints(float x1, float y1, float x2, float y2);
-bool isRayFacingUp(float angle);
-bool isRayFacingDown(float angle);
-bool isRayFacingLeft(float angle);
-bool isRayFacingRight(float angle);
-void castAllRays(void);
-void castRay(float rayAngle, int stripId);
-void renderRays(void);
-void horzIntersection(float rayAngle);
-void vertIntersection(float rayAngle);
+#endif /* RAYCAST_H */

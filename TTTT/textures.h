@@ -1,4 +1,11 @@
-/* Functions-variables-structs for textures */
+#ifndef TEXTURES_H
+#define TEXTURES_H
+
+#include "upng.h"
+#include "graphics.h"
+
+// Constants
+#define NUM_TEXTURES 8
 
 /**
  * struct texture_s - struct for the textures
@@ -8,7 +15,6 @@
  * @upngTexture: pointer to upng buffer
  *
  */
-
 typedef struct texture_s
 {
 	int width;
@@ -17,7 +23,11 @@ typedef struct texture_s
 	upng_t *upngTexture;
 } texture_t;
 
-texture_t wallTextures[NUM_TEXTURES];
+// Global array to store textures
+extern texture_t wallTextures[NUM_TEXTURES];
 
+// Function prototypes
 void WallTexturesready(void);
 void freeWallTextures(void);
+
+#endif /* TEXTURES_H */

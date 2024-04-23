@@ -45,3 +45,47 @@ void destroyWindow(void);
 typedef uint32_t color_t;
 
 
+
+
+
+#ifndef MAIN_H
+#define MAIN_H
+
+#include <stdbool.h>
+#include "input.h" // Assuming input.h is needed here
+
+// Constants
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
+#define FRAME_TIME_LENGTH 16 // Milliseconds per frame
+
+// Data structures
+typedef struct {
+    float x;
+    float y;
+    float width;
+    float height;
+    int walkDirection;
+    float walkSpeed;
+    int turnDirection;
+    float turnSpeed;
+    float rotationAngle;
+} player_t;
+
+// Function prototypes
+int initializeWindow(void); // Function declaration for initializeWindow
+void setup_game(void);
+void update_game(void);
+void render_game(void);
+void destroy_game(void);
+void movePlayer(float deltaTime);
+void castAllRays(void);
+void freeWallTextures(void);
+void destroyWindow(void);
+
+// Global variables
+extern bool GameRunning;
+extern int TicksLastFrame;
+extern player_t player;
+
+#endif /* MAIN_H */

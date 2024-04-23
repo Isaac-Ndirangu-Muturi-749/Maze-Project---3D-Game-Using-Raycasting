@@ -1,16 +1,4 @@
-/**
- * freeWallTextures - free wall textures
- *
-*/
-
-void freeWallTextures(void)
-{
-	int i;
-
-	for (i = 0; i < NUM_TEXTURES; i++)
-		upng_free(wallTextures[i].upngTexture);
-}
-
+#include "textures.h"
 
 
 static const char *textureFileNames[NUM_TEXTURES] = {
@@ -23,6 +11,7 @@ static const char *textureFileNames[NUM_TEXTURES] = {
 	"./images/wood.png",
 	"./images/eagle.png",
 };
+
 
 /**
  * WallTexturesready - load textures in the respective position
@@ -51,4 +40,17 @@ void WallTexturesready(void)
 		}
 	}
 
+}
+
+
+/**
+ * freeWallTextures - free wall textures
+ *
+*/
+void freeWallTextures(void)
+{
+	int i;
+
+	for (i = 0; i < NUM_TEXTURES; i++)
+		upng_free(wallTextures[i].upngTexture);
 }

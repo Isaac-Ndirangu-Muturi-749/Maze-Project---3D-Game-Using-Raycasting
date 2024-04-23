@@ -1,14 +1,4 @@
-/**
- * drawPixel - assign a color to each pixel
- * @x: x pixel coordinate
- * @y: y pixel coordinate
- * @color: pixel color
-*/
-
-void drawPixel(int x, int y, color_t color)
-{
-	colorBuffer[(SCREEN_WIDTH * y) + x] = color;
-}
+#include "utilities.h"
 
 
 /**
@@ -17,7 +7,6 @@ void drawPixel(int x, int y, color_t color)
  * @factor: intensity factor
  * @color: color for intensity
 */
-
 void changeColorIntensity(color_t *color, float factor)
 {
 	color_t a = (*color & 0xFF000000);
@@ -29,7 +18,6 @@ void changeColorIntensity(color_t *color, float factor)
 }
 
 
-
 /**
  * distanceBetweenPoints - Finds horizontal intersection with the wall
  * @x1: x coordinate of the starting point
@@ -38,12 +26,10 @@ void changeColorIntensity(color_t *color, float factor)
  * @y2: y coordinate of the end point
  * Return: the distance between two points
  */
-
 float distanceBetweenPoints(float x1, float y1, float x2, float y2)
 {
 	return (sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2)));
 }
-
 
 
 /**
@@ -51,7 +37,6 @@ float distanceBetweenPoints(float x1, float y1, float x2, float y2)
  * @rayAngle: current ray angle
  *
  */
-
 void vertIntersection(float rayAngle)
 {
 	float nextVertTouchX, nextVertTouchY;
@@ -93,12 +78,12 @@ void vertIntersection(float rayAngle)
 	}
 }
 
+
 /**
  * horzIntersection - Finds horizontal intersection with the wall
  * @rayAngle: current ray angle
  *
  */
-
 void horzIntersection(float rayAngle)
 {
 	float nextHorzTouchX, nextHorzTouchY, xintercept, yintercept, xstep, ystep;
@@ -135,57 +120,5 @@ void horzIntersection(float rayAngle)
 		}
 		nextHorzTouchX += xstep;
 		nextHorzTouchY += ystep;
-	}
-}
-
-
-/**
- * drawRect - draw a rectangle
- * @x: x coordinate
- * @y: y coordinate
- * @width: rectangle width
- * @height: rectangle height
- * @color: pixel color
-*/
-
-void drawRect(int x, int y, int width, int height, color_t color)
-{
-	int i, j;
-
-	for (i = x; i <= (x + width); i++)
-		for (j = y; j <= (y + height); j++)
-			drawPixel(i, j, color);
-}
-
-/**
- * drawLine - draw a line
- * @x0: x coordinate init
- * @y0: y coordinate init
- * @x1: x coordinate init
- * @y1: y coordinate end
- * @color: pixel color
-*/
-
-void drawLine(int x0, int y0, int x1, int y1, color_t color)
-{
-	float xIncrement, yIncrement, currentX, currentY;
-	int i, longestSideLength, deltaX,  deltaY;
-
-	deltaX = (x1 - x0);
-	deltaY = (y1 - y0);
-
-	longestSideLength = (abs(deltaX) >= abs(deltaY)) ? abs(deltaX) : abs(deltaY);
-
-	xIncrement = deltaX / (float)longestSideLength;
-	yIncrement = deltaY / (float)longestSideLength;
-
-	currentX = x0;
-	currentY = y0;
-
-	for (i = 0; i < longestSideLength; i++)
-	{
-		drawPixel(round(currentX), round(currentY), color);
-		currentX += xIncrement;
-		currentY += yIncrement;
 	}
 }

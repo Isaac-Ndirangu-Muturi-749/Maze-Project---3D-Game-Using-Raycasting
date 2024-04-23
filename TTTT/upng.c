@@ -1,3 +1,6 @@
+#include "upng.h"
+
+
 /**
 * uPNG -- derived from LodePNG version 20100808
 *

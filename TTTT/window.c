@@ -1,7 +1,11 @@
-tatic SDL_Renderer *renderer;
+#include "window.h"
+
+
+static SDL_Renderer *renderer;
 static color_t *colorBuffer;
 static SDL_Texture *colorBufferTexture;
 static SDL_Window *window;
+
 
 /**
  * initializeWindow - Initialize window to display the maze
@@ -51,11 +55,11 @@ bool initializeWindow(void)
 	return (true);
 }
 
+
 /**
  * destroyWindow - destroy window when the game is over
  *
 */
-
 void destroyWindow(void)
 {
 	free(colorBuffer);

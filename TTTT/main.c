@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * main - main function
  * Return: 0
@@ -24,11 +26,11 @@ bool GameRunning = false;
 int TicksLastFrame;
 player_t player;
 
+
 /**
  * setup_game - initialize player variables and load wall textures
  *
 */
-
 void setup_game(void)
 {
 
@@ -66,7 +68,6 @@ void update_game(void)
 	movePlayer(DeltaTime);
 	castAllRays();
 }
-
 
 
 /**

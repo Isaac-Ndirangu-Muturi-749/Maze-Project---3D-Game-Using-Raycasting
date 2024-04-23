@@ -1,9 +1,5 @@
 #include "input.h"
 
-void handleInput() {
-    // Implementation of input handling
-}
-
 
 /**
  * handleInput - process input from the keyboard
@@ -22,8 +18,6 @@ void handleInput(void)
 	else if (event.type == SDL_KEYUP)
 		SDL_KEYUP_FUNC(event);
 }
-
-
 
 
 /**
@@ -52,6 +46,7 @@ void SDL_KEYDOWN_FUNC(SDL_Event event)
 	if (event.key.keysym.sym == SDLK_d)
 		player.turnDirection = +1;
 }
+
 
 /**
  * SDL_KEYUP_FUNC - process input when a key is up
