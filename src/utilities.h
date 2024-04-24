@@ -11,6 +11,9 @@
 #include "raycast.h"
 #include "main.h"
 
+#include <stdint.h>
+
+typedef uint32_t color_t;
 
 // Function prototypes
 void changeColorIntensity(color_t *color, float factor);

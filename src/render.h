@@ -1,7 +1,7 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#include <stdint.h>
+
 
 
 #include "player.h"
@@ -13,9 +13,11 @@
 #include "player.h"
 #include "draw.h"
 
+#include <stdint.h>
+
+typedef uint32_t color_t;
 
 #define MINIMAP_SCALE_FACTOR 0.25
-
 
 // Function prototypes
 void render_game(void);

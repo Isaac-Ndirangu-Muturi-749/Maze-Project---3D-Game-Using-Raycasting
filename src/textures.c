@@ -1,7 +1,7 @@
 #include "textures.h"
 
 
-static const char *textureFileNames[NUM_TEXTURES] = {
+const char *textureFileNames[NUM_TEXTURES] = {
 	"./images/redbrick.png",
 	"./images/purplestone.png",
 	"./images/mossystone.png",

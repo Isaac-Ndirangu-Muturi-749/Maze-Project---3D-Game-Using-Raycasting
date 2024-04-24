@@ -1,12 +1,6 @@
 #include "window.h"
 
 
-static SDL_Renderer *renderer;
-static color_t *colorBuffer;
-static SDL_Texture *colorBufferTexture;
-static SDL_Window *window;
-
-
 /**
  * initializeWindow - Initialize window to display the maze
  * Return: true in case of success, false if it fails

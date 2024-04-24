@@ -2,8 +2,10 @@
 #define DRAW_H
 
 #include "main.h"
+
 #include <stdint.h>
 
+typedef uint32_t color_t;
 
 
 // Function prototypes

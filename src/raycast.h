@@ -5,8 +5,11 @@
 #include <math.h>
 #include <float.h>
 #include "main.h"
+#include "map.h"
+
 #include "utilities.h"
 
+#define SCREEN_WIDTH (MAP_NUM_COLS * TILE_SIZE)
 
 #define NUM_RAYS SCREEN_WIDTH
 #define PI 3.14159265
@@ -44,5 +47,9 @@ typedef struct ray_s
 } ray_t;
 
 extern ray_t rays[NUM_RAYS];
+
+extern bool foundHorzWallHit, foundVertWallHit;
+extern float horzWallHitX, horzWallHitY, vertWallHitX, vertWallHitY;
+extern int horzWallContent, vertWallContent;
 
 #endif /* RAYCAST_H */

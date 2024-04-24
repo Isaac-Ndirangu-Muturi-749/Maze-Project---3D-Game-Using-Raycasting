@@ -2,6 +2,8 @@
 	"files.associations": {
 		"0": "c",
 		"0.C": "cpp",
-		"zzee": "c"
+		"zzee": "c",
+		"player.h": "c",
+		"sdl.h": "c"
 	}
 }

@@ -23,8 +23,6 @@ int main(void)
 
 
 bool GameRunning = false;
-int TicksLastFrame;
-player_t player;
 
 
 /**

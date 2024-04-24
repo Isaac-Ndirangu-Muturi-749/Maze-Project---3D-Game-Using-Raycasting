@@ -2,7 +2,6 @@
 #define MAIN_H
 
 #include <SDL2/SDL.h>
-#include <stdint.h>
 #include <math.h>
 #include <limits.h>
 #include <stdio.h>
@@ -16,6 +15,9 @@
 #include "textures.h"
 #include "window.h"
 
+#include <stdint.h>
+
+typedef uint32_t color_t;
 
 // Constants
 #define PI 3.14159265
@@ -35,8 +37,6 @@ void destroy_game(void);
 extern bool GameRunning;
 extern int TicksLastFrame;
 extern player_t player;
-
-extern typedef uint32_t color_t;
 
 
 #endif /* MAIN_H */
