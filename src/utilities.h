@@ -3,9 +3,14 @@
 
 #include <stdbool.h>
 #include <math.h>
+#include <stdint.h>
+
 #include "map.h"
 #include "player.h"
 #include "collision.h"
+#include "raycast.h"
+#include "main.h"
+
 
 // Function prototypes
 void changeColorIntensity(color_t *color, float factor);
@@ -14,8 +19,6 @@ void vertIntersection(float rayAngle);
 void horzIntersection(float rayAngle);
 
 // Extern declarations
-extern bool foundHorzWallHit, foundVertWallHit;
-extern float horzWallHitX, horzWallHitY, vertWallHitX, vertWallHitY;
-extern int horzWallContent, vertWallContent;
+
 
 #endif /* UTILITIES_H */

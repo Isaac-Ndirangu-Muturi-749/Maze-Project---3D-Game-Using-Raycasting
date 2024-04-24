@@ -4,11 +4,17 @@
 #include <stdbool.h>
 #include <math.h>
 #include <float.h>
+#include "main.h"
+#include "utilities.h"
 
-#define NUM_RAYS 100
-#define TWO_PI (2 * M_PI)
-#define PI M_PI
-#define PROJ_PLANE (NUM_COLS / 2 * tan(FOV_ANGLE / 2))
+
+#define NUM_RAYS SCREEN_WIDTH
+#define PI 3.14159265
+#define TWO_PI 6.28318530
+
+#define FOV_ANGLE (60 * (PI / 180))
+#define PROJ_PLANE ((SCREEN_WIDTH / 2) / tan(FOV_ANGLE / 2))
+
 
 // Function prototypes
 void castRay(float rayAngle, int stripId);

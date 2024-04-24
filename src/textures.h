@@ -2,10 +2,14 @@
 #define TEXTURES_H
 
 #include "upng.h"
-#include "graphics.h"
+#include "main.h"
+#include <stdint.h>
 
 // Constants
 #define NUM_TEXTURES 8
+
+typedef uint32_t color_t;
+
 
 /**
  * struct texture_s - struct for the textures

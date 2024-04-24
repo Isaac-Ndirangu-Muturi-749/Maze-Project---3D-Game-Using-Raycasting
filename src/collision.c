@@ -1,4 +1,5 @@
 #include "collision.h"
+#include "main.h"
 
 /**
  * DetectCollision - Checks if there could be a collision

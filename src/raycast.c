@@ -1,35 +1,120 @@
-#include "utilities.h"
+#include "raycast.h"
+
+ray_t rays[NUM_RAYS];
+
+static bool foundHorzWallHit, foundVertWallHit;
+static float horzWallHitX, horzWallHitY, vertWallHitX, vertWallHitY;
+static int horzWallContent, vertWallContent;
 
 
 /**
- * changeColorIntensity - change color intensity
- * based on a factor value between 0 and 1
- * @factor: intensity factor
- * @color: color for intensity
-*/
-void changeColorIntensity(color_t *color, float factor)
-{
-	color_t a = (*color & 0xFF000000);
-	color_t r = (*color & 0x00FF0000) * factor;
-	color_t g = (*color & 0x0000FF00) * factor;
-	color_t b = (*color & 0x000000FF) * factor;
-
-	*color = a | (r & 0x00FF0000) | (g & 0x0000FF00) | (b & 0x000000FF);
-}
-
-
-/**
- * distanceBetweenPoints - Finds horizontal intersection with the wall
- * @x1: x coordinate of the starting point
- * @y1: y coordinate oh the starting point
- * @x2: x coordinate of the end point
- * @y2: y coordinate of the end point
- * Return: the distance between two points
+ * castRay - casting of each ray
+ * @rayAngle: current ray angle
+ * @stripId: ray strip identifier
  */
-float distanceBetweenPoints(float x1, float y1, float x2, float y2)
+void castRay(float rayAngle, int stripId)
 {
-	return (sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2)));
+	float horzHitDistance, vertHitDistance;
+
+	rayAngle = remainder(rayAngle, TWO_PI);
+	if (rayAngle < 0)
+		rayAngle = TWO_PI + rayAngle;
+
+	horzIntersection(rayAngle);
+
+	vertIntersection(rayAngle);
+
+	horzHitDistance = foundHorzWallHit
+		? distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
+		: FLT_MAX;
+	vertHitDistance = foundVertWallHit
+		? distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
+		: FLT_MAX;
+
+	if (vertHitDistance < horzHitDistance)
+	{
+		rays[stripId].distance = vertHitDistance;
+		rays[stripId].wallHitX = vertWallHitX;
+		rays[stripId].wallHitY = vertWallHitY;
+		rays[stripId].wallHitContent = vertWallContent;
+		rays[stripId].wasHitVertical = true;
+		rays[stripId].rayAngle = rayAngle;
+	}
+	else
+	{
+		rays[stripId].distance = horzHitDistance;
+		rays[stripId].wallHitX = horzWallHitX;
+		rays[stripId].wallHitY = horzWallHitY;
+		rays[stripId].wallHitContent = horzWallContent;
+		rays[stripId].wasHitVertical = false;
+		rays[stripId].rayAngle = rayAngle;
+	}
+
 }
+
+
+/**
+ * castAllRays - cast of all rays
+ *
+ */
+
+void castAllRays(void)
+{
+	int col;
+
+	for (col = 0; col < NUM_RAYS; col++)
+	{
+		float rayAngle = player.rotationAngle +
+							atan((col - NUM_RAYS / 2) / PROJ_PLANE);
+		castRay(rayAngle, col);
+	}
+}
+
+
+/**
+ * isRayFacingDown - check if the ray is facing down
+ * @angle: current ray angle
+ * Return: true or false
+ */
+bool isRayFacingDown(float angle)
+{
+	return (angle > 0 && angle < PI);
+}
+
+
+/**
+ * isRayFacingUp - check if the ray is facing up
+ * @angle: current ray angle
+ * Return: true or false
+ */
+bool isRayFacingUp(float angle)
+{
+	return (!isRayFacingDown(angle));
+}
+
+
+/**
+ * isRayFacingRight - check if the ray is facing to the right
+ * @angle: current ray angle
+ * Return: true or false
+ */
+bool isRayFacingRight(float angle)
+{
+	return (angle < 0.5 * PI || angle > 1.5 * PI);
+}
+
+
+/**
+ * isRayFacingLeft - check if the ray is facing to the right
+ * @angle: current ray angle
+ * Return: true or false
+ */
+
+bool isRayFacingLeft(float angle)
+{
+	return (!isRayFacingRight(angle));
+}
+
 
 
 /**

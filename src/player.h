@@ -1,18 +1,10 @@
-#ifndef PLAYER_H
-#define PLAYER_H
-
-// Function prototypes
-void movePlayer(int *playerX, int *playerY, double playerAngle);
-
-#endif /* PLAYER_H */
-
-
 
 #ifndef PLAYER_H
 #define PLAYER_H
 
 #include <math.h>
 #include "collision.h" // Assuming DetectCollision is defined here
+
 
 /**
  * struct player_s - struct for the textures

@@ -1,5 +1,6 @@
 #include "map.h"
 
+
 static const int map[MAP_NUM_ROWS][MAP_NUM_COLS] = {
 	{6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6},
 	{6, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6},
@@ -24,12 +25,12 @@ static const int map[MAP_NUM_ROWS][MAP_NUM_COLS] = {
  * @y: next y coordinate
  * @Return: true if it is within the map, false otherwise
 */
-
 bool isInsideMap(float x, float y)
 {
 	return (x >= 0 && x <= MAP_NUM_COLS * TILE_SIZE &&
 				y >= 0 && y <= MAP_NUM_ROWS * TILE_SIZE);
 }
+
 
 /**
  * getMapValue - check if we continue within the map
@@ -40,7 +41,6 @@ bool isInsideMap(float x, float y)
 
 int getMapValue(int row, int col)
 {
-
 	return (map[row][col]);
 
 }

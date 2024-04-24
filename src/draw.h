@@ -1,7 +1,10 @@
 #ifndef DRAW_H
 #define DRAW_H
 
-#include "graphics.h"
+#include "main.h"
+#include <stdint.h>
+
+
 
 // Function prototypes
 void drawPixel(int x, int y, color_t color);

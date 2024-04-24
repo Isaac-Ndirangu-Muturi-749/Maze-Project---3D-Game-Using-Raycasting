@@ -1,23 +1,21 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-#include <SDL.h>
-
-// Function prototypes
-void initRenderer(SDL_Renderer **renderer, int screenWidth, int screenHeight);
-void renderFrame(SDL_Renderer *renderer, int playerX, int playerY, double playerAngle);
-
-#endif /* RENDER_H */
+#include <stdint.h>
 
 
-
-#ifndef RENDER_H
-#define RENDER_H
-
-#include "graphics.h"
 #include "player.h"
 #include "raycast.h"
+#include "main.h"
 #include "map.h"
+#include "raycast.h"
+#include "player.h"
+#include "player.h"
+#include "draw.h"
+
+
+#define MINIMAP_SCALE_FACTOR 0.25
+
 
 // Function prototypes
 void render_game(void);
