@@ -1,5 +1,8 @@
 #include "main.h"
 
+bool GameRunning = false;
+int TicksLastFrame;
+player_t player;
 
 /**
  * main - main function
@@ -20,9 +23,6 @@ int main(void)
 	destroy_game();
 	return (0);
 }
-
-
-bool GameRunning = false;
 
 
 /**

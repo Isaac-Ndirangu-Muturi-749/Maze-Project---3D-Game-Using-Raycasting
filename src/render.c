@@ -20,19 +20,6 @@ void render_game(void)
 
 
 /**
- * clearColorBuffer - clear buffer for every frame
- * @color: color buffer
-*/
-void clearColorBuffer(color_t color)
-{
-	int i;
-
-	for (i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++)
-		colorBuffer[i] = color;
-}
-
-
-/**
  * renderColorBuffer - render buffer for every frame
  *
 */
@@ -46,6 +33,19 @@ void renderColorBuffer(void)
 	);
 	SDL_RenderCopy(renderer, colorBufferTexture, NULL, NULL);
 	SDL_RenderPresent(renderer);
+}
+
+
+/**
+ * clearColorBuffer - clear buffer for every frame
+ * @color: color buffer
+*/
+void clearColorBuffer(color_t color)
+{
+	int i;
+
+	for (i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++)
+		colorBuffer[i] = color;
 }
 
 

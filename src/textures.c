@@ -1,5 +1,6 @@
 #include "textures.h"
 
+texture_t wallTextures[NUM_TEXTURES];
 
 const char *textureFileNames[NUM_TEXTURES] = {
 	"./images/redbrick.png",

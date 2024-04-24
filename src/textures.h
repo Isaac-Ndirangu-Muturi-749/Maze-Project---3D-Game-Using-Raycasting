@@ -29,7 +29,6 @@ typedef struct texture_s
 
 // Global array to store textures
 extern texture_t wallTextures[NUM_TEXTURES];
-
 extern const char *textureFileNames[NUM_TEXTURES];
 
 // Function prototypes

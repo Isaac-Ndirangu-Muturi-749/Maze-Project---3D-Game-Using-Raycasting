@@ -18,8 +18,7 @@ typedef uint32_t color_t;
 // Function prototypes
 void changeColorIntensity(color_t *color, float factor);
 float distanceBetweenPoints(float x1, float y1, float x2, float y2);
-void vertIntersection(float rayAngle);
-void horzIntersection(float rayAngle);
+
 
 // Extern declarations
 

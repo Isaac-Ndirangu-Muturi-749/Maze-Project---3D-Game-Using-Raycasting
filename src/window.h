@@ -6,12 +6,16 @@
 #include "render.h"
 #include "main.h"
 
+#include <stdint.h>
+
+typedef uint32_t color_t;
 
 // Function prototypes
 bool initializeWindow(void);
 void destroyWindow(void);
 
-// Extern declarations
+
+// Declare external variables
 extern SDL_Renderer *renderer;
 extern color_t *colorBuffer;
 extern SDL_Texture *colorBufferTexture;

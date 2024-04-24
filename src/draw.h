@@ -2,6 +2,7 @@
 #define DRAW_H
 
 #include "main.h"
+#include "window.h"
 
 #include <stdint.h>
 

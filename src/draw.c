@@ -1,13 +1,11 @@
 #include "draw.h"
 
-
 /**
  * drawPixel - assign a color to each pixel
  * @x: x pixel coordinate
  * @y: y pixel coordinate
  * @color: pixel color
 */
-
 void drawPixel(int x, int y, color_t color)
 {
 	colorBuffer[(SCREEN_WIDTH * y) + x] = color;

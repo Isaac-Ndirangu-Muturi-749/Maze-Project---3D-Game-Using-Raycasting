@@ -1,5 +1,11 @@
 #include "window.h"
 
+// Define static variables
+SDL_Renderer *renderer;
+color_t *colorBuffer;
+SDL_Texture *colorBufferTexture;
+SDL_Window *window;
+
 
 /**
  * initializeWindow - Initialize window to display the maze

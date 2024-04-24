@@ -26,6 +26,8 @@ bool isRayFacingDown(float angle);
 bool isRayFacingUp(float angle);
 bool isRayFacingRight(float angle);
 bool isRayFacingLeft(float angle);
+void vertIntersection(float rayAngle);
+void horzIntersection(float rayAngle);
 
 /**
  * struct ray_s - struct for the textures
@@ -47,9 +49,5 @@ typedef struct ray_s
 } ray_t;
 
 extern ray_t rays[NUM_RAYS];
-
-extern bool foundHorzWallHit, foundVertWallHit;
-extern float horzWallHitX, horzWallHitY, vertWallHitX, vertWallHitY;
-extern int horzWallContent, vertWallContent;
 
 #endif /* RAYCAST_H */
