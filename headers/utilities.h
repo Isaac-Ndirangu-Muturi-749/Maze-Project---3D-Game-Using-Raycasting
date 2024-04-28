@@ -3,7 +3,6 @@
 
 #include <stdbool.h>
 #include <math.h>
-#include <stdint.h>
 
 #include "map.h"
 #include "player.h"

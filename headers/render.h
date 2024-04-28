@@ -3,10 +3,11 @@
 
 #include "player.h"
 #include "raycast.h"
-#include "main.h"
 #include "map.h"
 #include "raycast.h"
 #include "draw.h"
+
+#include "main.h"
 
 #include <stdint.h>
 typedef uint32_t color_t;

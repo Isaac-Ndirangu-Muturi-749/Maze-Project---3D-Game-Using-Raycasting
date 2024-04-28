@@ -5,9 +5,7 @@
 #include "window.h"
 
 #include <stdint.h>
-
 typedef uint32_t color_t;
-
 
 // Function prototypes
 void drawPixel(int x, int y, color_t color);

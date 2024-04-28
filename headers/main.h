@@ -15,9 +15,8 @@
 #include "textures.h"
 #include "window.h"
 
-#include <stdint.h>
 
-typedef uint32_t color_t;
+
 
 // Constants
 #define PI 3.14159265

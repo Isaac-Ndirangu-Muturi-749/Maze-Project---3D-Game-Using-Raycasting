@@ -3,12 +3,12 @@
 
 #include "upng.h"
 #include "main.h"
+
 #include <stdint.h>
+typedef uint32_t color_t;
 
 // Constants
 #define NUM_TEXTURES 8
-
-typedef uint32_t color_t;
 
 
 /**

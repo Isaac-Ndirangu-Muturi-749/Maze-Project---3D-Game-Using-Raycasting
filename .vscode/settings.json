@@ -4,6 +4,14 @@
 		"0.C": "cpp",
 		"zzee": "c",
 		"player.h": "c",
-		"sdl.h": "c"
+		"sdl.h": "c",
+		"collision.h": "c",
+		"input.h": "c",
+		"main.h": "c",
+		"map.h": "c",
+		"raycast.h": "c",
+		"render.h": "c",
+		"utilities.h": "c",
+		"window.h": "c"
 	}
 }

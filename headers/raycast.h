@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include <math.h>
 #include <float.h>
-#include "main.h"
 #include "map.h"
 
 #include "utilities.h"

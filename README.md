@@ -39,3 +39,9 @@ Sure, let's start by organizing the code into separate modules. We'll create hea
 8. **main.c**: The main function will stay here, orchestrating the game loop.
 
 Let's start by creating header files for each module and move the function prototypes accordingly. Then, we'll create the corresponding source files and implement the functions. Does that sound good?
+
+
+
+$ gcc -g src/*.c headers/*.h -lm -lSDL2
+
+

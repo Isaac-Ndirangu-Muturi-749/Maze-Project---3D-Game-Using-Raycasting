@@ -1,4 +1,4 @@
-#include "draw.h"
+#include "../headers/draw.h"
 
 /**
  * drawPixel - assign a color to each pixel

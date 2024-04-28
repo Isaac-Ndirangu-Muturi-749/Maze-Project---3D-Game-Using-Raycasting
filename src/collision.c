@@ -1,5 +1,5 @@
-#include "collision.h"
-#include "main.h"
+#include "../headers/collision.h"
+#include "../headers/main.h"
 
 /**
  * DetectCollision - Checks if there could be a collision

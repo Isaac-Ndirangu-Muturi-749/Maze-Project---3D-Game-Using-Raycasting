@@ -1,4 +1,4 @@
-#include "window.h"
+#include "../headers/window.h"
 
 // Define static variables
 SDL_Renderer *renderer;

@@ -4,10 +4,10 @@
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 #include "render.h"
+
 #include "main.h"
 
 #include <stdint.h>
-
 typedef uint32_t color_t;
 
 // Function prototypes

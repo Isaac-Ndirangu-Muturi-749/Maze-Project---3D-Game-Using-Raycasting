@@ -1,4 +1,4 @@
-#include "textures.h"
+#include "../headers/textures.h"
 
 texture_t wallTextures[NUM_TEXTURES];
 
