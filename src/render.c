@@ -145,7 +145,7 @@ void renderFloor(int wallBottomPixel, color_t *texelColor, int x)
 		textureOffsetY = (int)(abs(textureOffsetY * texture_height / 30)
 								% texture_height);
 
-		*texelColor = wallTextures[4].
+		*texelColor = wallTextures[3].
 					  texture_buffer[(texture_width * textureOffsetY) + textureOffsetX];
 		drawPixel(x, y, *texelColor);
 	}
@@ -181,7 +181,7 @@ void renderCeil(int wallTopPixel, color_t *texelColor, int x)
 		textureOffsetY = (int)(abs(textureOffsetY * texture_height / 40)
 								% texture_height);
 
-		*texelColor = wallTextures[6].
+		*texelColor = wallTextures[7].
 					  texture_buffer[(texture_width * textureOffsetY) + textureOffsetX];
 		drawPixel(x, y, *texelColor);
 

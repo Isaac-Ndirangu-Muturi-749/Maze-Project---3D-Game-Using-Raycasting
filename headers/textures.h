@@ -8,7 +8,7 @@
 typedef uint32_t color_t;
 
 // Constants
-#define NUM_TEXTURES 8
+#define NUM_TEXTURES 9
 
 
 /**

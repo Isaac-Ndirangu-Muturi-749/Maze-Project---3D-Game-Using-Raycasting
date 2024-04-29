@@ -6,11 +6,11 @@ const char *textureFileNames[NUM_TEXTURES] = {
 	"./images/redbrick.png",
 	"./images/purplestone.png",
 	"./images/mossystone.png",
-	"./images/graystone.png",
+	"./images/64x64-floor.png",
 	"./images/colorstone.png",
 	"./images/bluestone.png",
 	"./images/wood.png",
-	"./images/eagle.png",
+	"./images/64x64-clrsky.png",
 };
 
 
@@ -40,7 +40,6 @@ void WallTexturesready(void)
 			}
 		}
 	}
-
 }
 
 
