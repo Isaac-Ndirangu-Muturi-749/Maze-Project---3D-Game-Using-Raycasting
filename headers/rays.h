@@ -4,29 +4,19 @@
 #include <stdbool.h>
 #include <math.h>
 #include <float.h>
+
 #include "map.h"
+#include "window.h"
+#include "collision.h"
+#include "draw.h"
+#include "player.h"
 
-#include "utilities.h"
 
-#define SCREEN_WIDTH (MAP_NUM_COLS * TILE_SIZE)
-
-#define NUM_RAYS SCREEN_WIDTH
+#define NUM_RAYS WINDOW_WIDTH
 #define PI 3.14159265
 #define TWO_PI 6.28318530
-
 #define FOV_ANGLE (60 * (PI / 180))
-#define PROJ_PLANE ((SCREEN_WIDTH / 2) / tan(FOV_ANGLE / 2))
-
-
-// Function prototypes
-void castRay(float rayAngle, int stripId);
-void castAllRays(void);
-bool isRayFacingDown(float angle);
-bool isRayFacingUp(float angle);
-bool isRayFacingRight(float angle);
-bool isRayFacingLeft(float angle);
-void vertIntersection(float rayAngle);
-void horzIntersection(float rayAngle);
+#define PROJECTION_PLANE ((WINDOW_WIDTH / 2) / tan(FOV_ANGLE / 2))
 
 /**
  * struct ray_s - struct for the textures
@@ -46,6 +36,23 @@ typedef struct ray_s
 	bool wasHitVertical;
 	int wallHitContent;
 } ray_t;
+
+
+// Function prototypes
+void castRay(float rayAngle, int stripId);
+void castAllRays(void);
+float distanceBetweenPoints(float x1, float y1, float x2, float y2);
+
+void renderRays(void);
+
+void vertIntersection(float rayAngle);
+void horzIntersection(float rayAngle);
+
+bool isRayFacingDown(float angle);
+bool isRayFacingUp(float angle);
+bool isRayFacingRight(float angle);
+bool isRayFacingLeft(float angle);
+
 
 extern ray_t rays[NUM_RAYS];
 

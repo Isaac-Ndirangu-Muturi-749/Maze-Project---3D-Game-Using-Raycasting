@@ -14,6 +14,8 @@
 		"utilities.h": "c",
 		"window.h": "c",
 		"upng.h": "c",
-		"rain.h": "c"
+		"rain.h": "c",
+		"color_buffer.h": "c",
+		"draw.h": "c"
 	}
 }

@@ -3,8 +3,9 @@
 #define PLAYER_H
 
 #include <math.h>
-#include "collision.h" // Assuming DetectCollision is defined here
+#include "collision.h"
 
+#define PI 3.14159265
 
 
 /**
@@ -33,6 +34,8 @@ typedef struct player_s
 } player_t;
 
 // Function prototypes
+void initializePlayer(void);
+void renderPlayer(void);
 void movePlayer(float DeltaTime);
 
 // External variable declaration

@@ -1,42 +1,49 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <SDL2/SDL.h>
-#include <math.h>
-#include <limits.h>
-#include <stdio.h>
-#include "upng.h"
-#include <SDL2/SDL_image.h>
+#include <stdlib.h>
 
-
-#include <stdbool.h>
-#include "input.h"
-#include "player.h"
-#include "render.h"
-#include "raycast.h"
-#include "textures.h"
 #include "window.h"
 #include "rain.h"
-
+#include "walls.h"
+#include "ceiling.h"
+#include "floor.h"
+#include "weapon.h"
+#include "color_buffer.h"
+#include "input.h"
+#include "player.h"
 
 
 // Constants
 #define PI 3.14159265
-#define SCREEN_WIDTH (MAP_NUM_COLS * TILE_SIZE)
-#define SCREEN_HEIGHT (MAP_NUM_ROWS * TILE_SIZE)
-#define FPS 30
+#define FPS 60
 #define FRAME_TIME_LENGTH (1000 / FPS)
 
 
-// Function prototypes
-void setup_game(void);
-void update_game(void);
-void destroy_game(void);
+/**
+ * struct texture_s - struct for the textures
+ * @width: texture width
+ * @height: texture height
+ * @texture_buffer: pointer to texture buffer
+ * @upngTexture: pointer to upng buffer
+ *
+ */
+typedef struct texture_s
+{
+	int width;
+	int height;
+	color_t *texture_buffer;
+	upng_t *upngTexture;
+} texture_t;
 
+// Function prototypes
+void setupGame(void);
+void updateGame(void);
+void renderGame(void);
+void destroyGame(void);
 
 // Global variables
 extern bool GameRunning;
 extern int TicksLastFrame;
-
 
 #endif /* MAIN_H */

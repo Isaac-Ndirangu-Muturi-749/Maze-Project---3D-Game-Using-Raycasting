@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
-#include "main.h"
+#include "window.h"
 
 #define MAX_RAIN_DROPS 1000
 
