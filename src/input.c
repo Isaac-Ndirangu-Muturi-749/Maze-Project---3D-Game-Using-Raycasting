@@ -7,16 +7,20 @@
 */
 void handleInput(void)
 {
-	SDL_Event event;
+    SDL_Event event;
 
-	SDL_PollEvent(&event);
+    SDL_PollEvent(&event);
 
-	if (event.type == SDL_QUIT)
-		GameRunning = false;
-	else if (event.type == SDL_KEYDOWN)
-		SDL_KEYDOWN_FUNC(event);
-	else if (event.type == SDL_KEYUP)
-		SDL_KEYUP_FUNC(event);
+    if (event.type == SDL_QUIT)
+        GameRunning = false;
+    else if (event.type == SDL_KEYDOWN)
+        SDL_KEYDOWN_FUNC(event);
+    else if (event.type == SDL_KEYUP)
+        SDL_KEYUP_FUNC(event);
+
+    // Add rain toggling logic
+    if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
+        isRaining = !isRaining; // Toggle rain on/off with spacebar
 }
 
 

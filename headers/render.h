@@ -6,8 +6,12 @@
 #include "map.h"
 #include "raycast.h"
 #include "draw.h"
+#include "upng.h"
+#include <SDL2/SDL_image.h>
 
 #include "main.h"
+#include "rain.h"
+
 
 #include <stdint.h>
 typedef uint32_t color_t;
@@ -24,5 +28,7 @@ void renderFloor(int wallBottomPixel, color_t *texelColor, int x);
 void renderCeil(int wallTopPixel, color_t *texelColor, int x);
 void clearColorBuffer(color_t color);
 void renderColorBuffer(void);
+void renderWeapon(void);
+
 
 #endif /* RENDER_H */

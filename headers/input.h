@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include "player.h"
+#include "rain.h"
 
 
 extern bool GameRunning;

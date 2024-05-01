@@ -4,6 +4,7 @@ bool GameRunning = false;
 int TicksLastFrame;
 player_t player;
 
+
 /**
  * main - main function
  * Return: 0
@@ -12,6 +13,12 @@ int main(void)
 {
 	GameRunning = initializeWindow();
 
+    // Seed random number generator
+    srand(SDL_GetTicks());
+
+    // Initialize raindrops
+    initializeRaindrops();
+
 	setup_game();
 
 	while (GameRunning)
@@ -19,6 +26,17 @@ int main(void)
 		handleInput();
 		update_game();
 		render_game();
+        // Update and render raindrops if raining
+        if (isRaining) {
+            updateRaindrops();
+            renderRaindrops();
+        }
+
+        // Update screen
+        SDL_RenderPresent(renderer);
+
+        // Delay to control frame rate
+        SDL_Delay(10);
 	}
 	destroy_game();
 	return (0);
@@ -41,6 +59,8 @@ void setup_game(void)
 	player.turnDirection = 0;
 	player.turnSpeed = 45 * (PI / 180);
 	player.rotationAngle = PI / 2;
+
+	WeaponTexturesready();
 	WallTexturesready();
 }
 
@@ -74,6 +94,7 @@ void update_game(void)
 */
 void destroy_game(void)
 {
+	freeWeaponTextures();
 	freeWallTextures();
 	destroyWindow();
 }

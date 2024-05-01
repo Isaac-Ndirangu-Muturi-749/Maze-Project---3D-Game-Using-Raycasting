@@ -6,15 +6,17 @@
 #include <limits.h>
 #include <stdio.h>
 #include "upng.h"
+#include <SDL2/SDL_image.h>
+
 
 #include <stdbool.h>
-#include "input.h" // Assuming input.h is needed here
+#include "input.h"
 #include "player.h"
 #include "render.h"
 #include "raycast.h"
 #include "textures.h"
 #include "window.h"
-
+#include "rain.h"
 
 
 
@@ -35,7 +37,6 @@ void destroy_game(void);
 // Global variables
 extern bool GameRunning;
 extern int TicksLastFrame;
-extern player_t player;
 
 
 #endif /* MAIN_H */

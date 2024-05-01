@@ -6,6 +6,7 @@
 #include "collision.h" // Assuming DetectCollision is defined here
 
 
+
 /**
  * struct player_s - struct for the textures
  * @x: x coordinate

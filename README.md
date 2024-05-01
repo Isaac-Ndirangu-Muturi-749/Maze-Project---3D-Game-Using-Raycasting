@@ -231,3 +231,4 @@ If you're encountering issues with collisions, you might want to inspect how the
 
 
 
+gcc src/*.c -lm -lSDL2 -lSDL2_image

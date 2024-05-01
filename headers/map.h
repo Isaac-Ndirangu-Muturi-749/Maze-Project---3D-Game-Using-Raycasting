@@ -14,5 +14,6 @@ extern const int map[MAP_NUM_ROWS][MAP_NUM_COLS]; // Declaration
 // Function prototypes
 bool isInsideMap(float x, float y);
 int getMapValue(int row, int col);
+void addEnemiesToMap();
 
 #endif /* MAP_H */
