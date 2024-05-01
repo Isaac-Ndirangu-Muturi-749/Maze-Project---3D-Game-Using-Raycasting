@@ -3,12 +3,14 @@
 static texture_t wallTextures[NUM_WALL_TEXTURES];
 // Define texture file names for walls
 static const char *wallTextureFileNames[NUM_WALL_TEXTURES] = {
-    "./images/redbrick.png",
-    "./images/purplestone.png",
-    "./images/mossystone.png",
-    "./images/colorstone.png",
-    "./images/bluestone.png",
-    "./images/wood.png"
+	"./images/redbrick.png",
+	"./images/purplestone.png",
+	"./images/colorstone.png",
+	"./images/wood.png",
+	"./images/graystone.png",
+	"./images/mossystone.png",
+	"./images/bluestone.png",
+	"./images/eagle.png",
 };
 
 // Function to load wall textures
@@ -34,39 +36,56 @@ void freeWallTextures(void) {
     }
 }
 
+
+int wallTopPixel;
+int wallBottomPixel;
+
 // Function to render wall projection
-void renderWall(void) {
-    for (int x = 0; x < NUM_RAYS; x++) {
-        float perpDistance = rays[x].distance * cos(rays[x].rayAngle - player.rotationAngle);
-        float projectedWallHeight = (TILE_SIZE / perpDistance) * PROJECTION_PLANE;
-        int wallStripHeight = (int)projectedWallHeight;
-        int wallTopPixel = (WINDOW_HEIGHT / 2) - (wallStripHeight / 2);
-        int wallBottomPixel = (WINDOW_HEIGHT / 2) + (wallStripHeight / 2);
+void renderWall(void)
+{
+	int x, y, texNum, texture_width, texture_height,
+		textureOffsetX, wallBottomPixel, wallStripHeight,
+		wallTopPixel, distanceFromTop, textureOffsetY;
+	float perpDistance, projectedWallHeight;
+	color_t texelColor;
 
-        // Ensure wallTopPixel and wallBottomPixel are within screen bounds
-        wallTopPixel = (wallTopPixel < 0) ? 0 : wallTopPixel;
-        wallBottomPixel = (wallBottomPixel > WINDOW_HEIGHT) ? WINDOW_HEIGHT : wallBottomPixel;
+	for (x = 0; x < NUM_RAYS; x++)
+	{
+		perpDistance = rays[x].distance * cos(rays[x].rayAngle
+							- player.rotationAngle);
+		projectedWallHeight = (TILE_SIZE / perpDistance) * PROJECTION_PLANE;
+		wallStripHeight = (int)projectedWallHeight;
+		wallTopPixel = (WINDOW_HEIGHT / 2) - (wallStripHeight / 2);
+		wallTopPixel = wallTopPixel < 0 ? 0 : wallTopPixel;
+		wallBottomPixel = (WINDOW_HEIGHT / 2) + (wallStripHeight / 2);
+		wallBottomPixel = wallBottomPixel > WINDOW_HEIGHT
+							? WINDOW_HEIGHT : wallBottomPixel;
 
-        int texNum = rays[x].wallHitContent - 1;
-        int texture_width = wallTextures[texNum].width;
-        int texture_height = wallTextures[texNum].height;
+		texNum = rays[x].wallHitContent - 1;
+		texture_width = wallTextures[texNum].width;
+		texture_height = wallTextures[texNum].height;
+		renderFloor(wallBottomPixel, &texelColor, x);
+		renderCeiling(wallTopPixel, &texelColor, x);
 
-        for (int y = wallTopPixel; y < wallBottomPixel; y++) {
-            int distanceFromTop = y + (wallStripHeight / 2) - (WINDOW_HEIGHT / 2);
-            int textureOffsetY = distanceFromTop * ((float)texture_height / wallStripHeight);
-            int textureOffsetX = rays[x].wasHitVertical ? ((int)rays[x].wallHitY % TILE_SIZE) :
-                                                           ((int)rays[x].wallHitX % TILE_SIZE);
-            color_t texelColor = wallTextures[texNum].texture_buffer[(texture_width * textureOffsetY) + textureOffsetX];
+		if (rays[x].wasHitVertical)
+			textureOffsetX = (int)rays[x].wallHitY % TILE_SIZE;
+		else
+			textureOffsetX = (int)rays[x].wallHitX % TILE_SIZE;
 
-            // Adjust color intensity for vertical walls
-            if (rays[x].wasHitVertical) {
-                changeColorIntensity(&texelColor, 0.5);
-            }
-
-            drawPixel(x, y, texelColor);
-        }
-    }
+		for (y = wallTopPixel; y < wallBottomPixel; y++)
+		{
+			distanceFromTop = y + (wallStripHeight / 2) - (WINDOW_HEIGHT / 2);
+			textureOffsetY = distanceFromTop *
+								((float)texture_height / wallStripHeight);
+			texelColor = wallTextures[texNum].
+						 texture_buffer[(texture_width * textureOffsetY) + textureOffsetX];
+			if (rays[x].wasHitVertical)
+				changeColorIntensity(&texelColor, 0.5);
+			drawPixel(x, y, texelColor);
+		}
+	}
 }
+
 
 /**
  * changeColorIntensity - change color intensity

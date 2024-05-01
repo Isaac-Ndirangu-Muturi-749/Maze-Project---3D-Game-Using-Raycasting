@@ -15,7 +15,6 @@
 
 
 // Constants
-#define PI 3.14159265
 #define FPS 60
 #define FRAME_TIME_LENGTH (1000 / FPS)
 

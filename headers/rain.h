@@ -7,7 +7,7 @@
 #include <SDL2/SDL.h>
 #include "window.h"
 
-#define MAX_RAIN_DROPS 1000
+#define MAX_RAIN_DROPS 1500
 
 typedef struct {
     float x, y;     // Position

@@ -16,6 +16,7 @@
 		"upng.h": "c",
 		"rain.h": "c",
 		"color_buffer.h": "c",
-		"draw.h": "c"
+		"draw.h": "c",
+		"stdlib.h": "c"
 	}
 }

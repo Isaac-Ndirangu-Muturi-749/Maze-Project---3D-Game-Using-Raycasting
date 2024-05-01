@@ -9,6 +9,6 @@
 
 void loadCeilingTextures(void);
 void freeCeilingTextures(void);
-void renderCeil(int wallTopPixel, color_t *texelColor, int x);
+void renderCeiling(int wallTopPixel, color_t *texelColor, int x);
 
 #endif /* CEILING_TEXTURES_H */
