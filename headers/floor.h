@@ -1,5 +1,5 @@
-#ifndef FLOOR_TEXTURES_H
-#define FLOOR_TEXTURES_H
+#ifndef FLOOR_H
+#define FLOOR_H
 
 
 #include "main.h"
@@ -13,4 +13,4 @@ void loadFloorTextures(void);
 void freeFloorTextures(void);
 void renderFloor(int wallBottomPixel, color_t *texelColor, int x);
 
-#endif /* FLOOR_TEXTURES_H */
+#endif /* FLOOR_H */

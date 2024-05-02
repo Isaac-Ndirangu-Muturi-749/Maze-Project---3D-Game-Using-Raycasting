@@ -1,5 +1,5 @@
-#ifndef RAYCAST_H
-#define RAYCAST_H
+#ifndef RAYS_H
+#define RAYS_H
 
 #include <stdbool.h>
 #include <math.h>
@@ -56,4 +56,4 @@ bool isRayFacingLeft(float angle);
 
 extern ray_t rays[NUM_RAYS];
 
-#endif /* RAYCAST_H */
+#endif /* RAYS_H */

@@ -64,7 +64,7 @@ void updateGame(void) {
 */
 void renderGame(void) {
     clearColorBuffer(0xFF000000);
-    renderWall();
+    renderWalls();
     renderMap();
     renderRays();
     renderPlayer();

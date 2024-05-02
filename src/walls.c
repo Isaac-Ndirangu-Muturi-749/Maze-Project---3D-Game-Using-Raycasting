@@ -41,7 +41,7 @@ int wallTopPixel;
 int wallBottomPixel;
 
 // Function to render wall projection
-void renderWall(void)
+void renderWalls(void)
 {
 	int x, y, texNum, texture_width, texture_height,
 		textureOffsetX, wallBottomPixel, wallStripHeight,

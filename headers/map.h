@@ -20,3 +20,4 @@ int getMapValue(int row, int col);
 void renderMap(void);
 
 #endif /* MAP_H */
+

@@ -1,5 +1,5 @@
-#ifndef TEXTURES_H
-#define TEXTURES_H
+#ifndef WEAPON_H
+#define WEAPON_H
 
 #include <SDL2/SDL_image.h>
 
@@ -13,4 +13,4 @@ void loadWeaponTextures(void);
 void freeWeaponTextures(void);
 void renderWeapon(void);
 
-#endif /* TEXTURES_H */
+#endif /* WEAPON_H */

@@ -17,6 +17,7 @@
 		"rain.h": "c",
 		"color_buffer.h": "c",
 		"draw.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"floor.h": "c"
 	}
 }

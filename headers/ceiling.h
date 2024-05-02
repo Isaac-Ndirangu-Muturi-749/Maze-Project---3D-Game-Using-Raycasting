@@ -1,5 +1,5 @@
-#ifndef CEILING_TEXTURES_H
-#define CEILING_TEXTURES_H
+#ifndef CEILING_H
+#define CEILING_H
 
 #include "main.h"
 #include "upng.h"
@@ -11,4 +11,4 @@ void loadCeilingTextures(void);
 void freeCeilingTextures(void);
 void renderCeiling(int wallTopPixel, color_t *texelColor, int x);
 
-#endif /* CEILING_TEXTURES_H */
+#endif /* CEILING_H */

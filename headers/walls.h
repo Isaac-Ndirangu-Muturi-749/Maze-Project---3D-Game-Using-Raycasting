@@ -1,5 +1,5 @@
-#ifndef WALL_TEXTURES_H
-#define WALL_TEXTURES_H
+#ifndef WALLS_H
+#define WALLS_H
 
 #include "main.h"
 #include "upng.h"
@@ -18,10 +18,10 @@ typedef uint32_t color_t;
 // Function to load wall textures
 void loadWallTextures(void);
 void freeWallTextures(void);
-void renderWall(void);
+void renderWalls(void);
 void changeColorIntensity(color_t *color, float factor);
 
 extern int wallTopPixel;
 extern int wallBottomPixel;
 
-#endif /* WALL_TEXTURES_H */
+#endif /* WALLS_H */
