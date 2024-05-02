@@ -67,14 +67,15 @@ After compiling the project, you can run the executable:
 
 ## Game Demo
 
-#TODO add youtube link
+[![Watch the video](https://img.youtube.com/vi/ZXjm-hveqRM/maxresdefault.jpg)](https://youtu.be/ZXjm-hveqRM?si=wP6MoSgsBu7Igr1Z)
+
 
 ### About Me
 Follow me on Twitter 🐦, connect with me on LinkedIn 🔗, and check out my GitHub 🐙. You won't be disappointed!
 
 👉 Twitter: https://twitter.com/NdiranguMuturi1
 👉 LinkedIn: https://www.linkedin.com/in/isaac-muturi-3b6b2b237
-👉 GitHub: https://github.com/Isaac-Ndirangu-Muturi-749  
+👉 GitHub: https://github.com/Isaac-Ndirangu-Muturi-749
 
 So, what are you waiting for? Join me on my tech journey and learn something new today! 🚀🌟
 
