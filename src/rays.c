@@ -7,46 +7,46 @@ static float horzWallHitX, horzWallHitY, vertWallHitX, vertWallHitY;
 static int horzWallContent, vertWallContent;
 
 void castRay(float rayAngle, int stripId) {
-    rayAngle = fmodf(rayAngle, TWO_PI);
-    if (rayAngle < 0)
-        rayAngle = TWO_PI + rayAngle;
+	rayAngle = fmodf(rayAngle, TWO_PI);
+	if (rayAngle < 0)
+		rayAngle = TWO_PI + rayAngle;
 
-    horzIntersection(rayAngle);
-    vertIntersection(rayAngle);
+	horzIntersection(rayAngle);
+	vertIntersection(rayAngle);
 
-    float horzHitDistance = foundHorzWallHit
-                                ? distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
-                                : FLT_MAX;
-    float vertHitDistance = foundVertWallHit
-                                ? distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
-                                : FLT_MAX;
+	float horzHitDistance = foundHorzWallHit
+								? distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
+								: FLT_MAX;
+	float vertHitDistance = foundVertWallHit
+								? distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
+								: FLT_MAX;
 
-    if (vertHitDistance < horzHitDistance) {
-        rays[stripId] = (ray_t){
-            .distance = vertHitDistance,
-            .wallHitX = vertWallHitX,
-            .wallHitY = vertWallHitY,
-            .wallHitContent = vertWallContent,
-            .wasHitVertical = true,
-            .rayAngle = rayAngle
-        };
-    } else {
-        rays[stripId] = (ray_t){
-            .distance = horzHitDistance,
-            .wallHitX = horzWallHitX,
-            .wallHitY = horzWallHitY,
-            .wallHitContent = horzWallContent,
-            .wasHitVertical = false,
-            .rayAngle = rayAngle
-        };
-    }
+	if (vertHitDistance < horzHitDistance) {
+		rays[stripId] = (ray_t){
+			.distance = vertHitDistance,
+			.wallHitX = vertWallHitX,
+			.wallHitY = vertWallHitY,
+			.wallHitContent = vertWallContent,
+			.wasHitVertical = true,
+			.rayAngle = rayAngle
+		};
+	} else {
+		rays[stripId] = (ray_t){
+			.distance = horzHitDistance,
+			.wallHitX = horzWallHitX,
+			.wallHitY = horzWallHitY,
+			.wallHitContent = horzWallContent,
+			.wasHitVertical = false,
+			.rayAngle = rayAngle
+		};
+	}
 }
 
 void castAllRays(void) {
-    for (int col = 0; col < NUM_RAYS; col++) {
-        float rayAngle = player.rotationAngle + atan((col - NUM_RAYS / 2) / PROJECTION_PLANE);
-        castRay(rayAngle, col);
-    }
+	for (int col = 0; col < NUM_RAYS; col++) {
+		float rayAngle = player.rotationAngle + atan((col - NUM_RAYS / 2) / PROJECTION_PLANE);
+		castRay(rayAngle, col);
+	}
 }
 
 

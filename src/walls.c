@@ -15,25 +15,25 @@ static const char *wallTextureFileNames[NUM_WALL_TEXTURES] = {
 
 // Function to load wall textures
 void loadWallTextures(void) {
-    for (int i = 0; i < NUM_WALL_TEXTURES; i++) {
-        upng_t *upng = upng_new_from_file(wallTextureFileNames[i]);
-        if (upng != NULL && upng_decode(upng) == UPNG_EOK) {
-            wallTextures[i].upngTexture = upng;
-            wallTextures[i].width = upng_get_width(upng);
-            wallTextures[i].height = upng_get_height(upng);
-            wallTextures[i].texture_buffer = (color_t *)upng_get_buffer(upng);
-        }
-    }
+	for (int i = 0; i < NUM_WALL_TEXTURES; i++) {
+		upng_t *upng = upng_new_from_file(wallTextureFileNames[i]);
+		if (upng != NULL && upng_decode(upng) == UPNG_EOK) {
+			wallTextures[i].upngTexture = upng;
+			wallTextures[i].width = upng_get_width(upng);
+			wallTextures[i].height = upng_get_height(upng);
+			wallTextures[i].texture_buffer = (color_t *)upng_get_buffer(upng);
+		}
+	}
 }
 
 // Function to free wall textures
 void freeWallTextures(void) {
-    for (int i = 0; i < NUM_WALL_TEXTURES; i++) {
-        if (wallTextures[i].upngTexture != NULL) {
-            upng_free(wallTextures[i].upngTexture);
-            wallTextures[i].upngTexture = NULL;
-        }
-    }
+	for (int i = 0; i < NUM_WALL_TEXTURES; i++) {
+		if (wallTextures[i].upngTexture != NULL) {
+			upng_free(wallTextures[i].upngTexture);
+			wallTextures[i].upngTexture = NULL;
+		}
+	}
 }
 
 

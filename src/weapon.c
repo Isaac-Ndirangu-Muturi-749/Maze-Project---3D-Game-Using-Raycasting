@@ -2,28 +2,28 @@
 
 static texture_t weaponTextures[NUM_WEAPONS];
 static const char *WeaponTextureFileNames[NUM_WEAPONS] = {
-    "./images/gun1.png",
+	"./images/gun1.png",
 };
 
 
 void loadWeaponTextures(void) {
-    for (int i = 0; i < NUM_WEAPONS; i++) {
-        upng_t *upng = upng_new_from_file(WeaponTextureFileNames[i]);
+	for (int i = 0; i < NUM_WEAPONS; i++) {
+		upng_t *upng = upng_new_from_file(WeaponTextureFileNames[i]);
 
-        if (upng != NULL && upng_decode(upng) == UPNG_EOK) {
-            weaponTextures[i].upngTexture = upng;
-            weaponTextures[i].width = upng_get_width(upng);
-            weaponTextures[i].height = upng_get_height(upng);
-            weaponTextures[i].texture_buffer = (color_t *)upng_get_buffer(upng);
-        }
-    }
+		if (upng != NULL && upng_decode(upng) == UPNG_EOK) {
+			weaponTextures[i].upngTexture = upng;
+			weaponTextures[i].width = upng_get_width(upng);
+			weaponTextures[i].height = upng_get_height(upng);
+			weaponTextures[i].texture_buffer = (color_t *)upng_get_buffer(upng);
+		}
+	}
 }
 
 
 void freeWeaponTextures(void) {
-    for (int i = 0; i < NUM_WEAPONS; i++) {
-        upng_free(weaponTextures[i].upngTexture);
-    }
+	for (int i = 0; i < NUM_WEAPONS; i++) {
+		upng_free(weaponTextures[i].upngTexture);
+	}
 }
 
 
