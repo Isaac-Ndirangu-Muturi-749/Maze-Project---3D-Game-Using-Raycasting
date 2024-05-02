@@ -17,6 +17,13 @@ This project relies on the following dependencies:
 - **SDL2**: A cross-platform development library designed to provide low-level access to audio, keyboard, mouse, joystick, and graphics hardware.
 - **SDL2_image**: An extension library that enables loading and saving images in various formats.
 
+### Introducing SDL2 and Raycasting for Understanding
+
+`Simple DirectMedia Layer (SDL)` is a cross-platform software development library designed to provide a hardware abstraction layer for computer multimedia hardware components. Software developers can use it to write high-performance computer games and other multimedia applications that can run on many operating systems such as Android, iOS, Linux, macOS, and Windows. SDL manages video, audio, input devices, CD-ROM, threads, shared object loading, networking and timers.
+
+- **SDL2**: SDL2 is a powerful library that simplifies the process of creating graphical applications. It provides functions for handling windows, rendering graphics, and capturing user input.
+- **Raycasting**: Raycasting is a rendering technique used to create a 3D perspective effect in 2D environments. It involves casting rays from the player's viewpoint and calculating intersections with objects in the scene to determine what is visible.
+
 ### Installing Libraries and Compiling Guide
 Before compiling the project, make sure you have SDL2 and SDL2_image installed on your system. You can install them using your package manager:
 
@@ -44,19 +51,30 @@ After compiling the project, you can run the executable:
 - Keyboard controls for movement (WASD for navigation).
 
 ### How to Control or Activate Features
+
 - Use the **W** key to move forward.
 - Use the **S** key to move backward.
-- Use the **A** key to strafe left.
-- Use the **D** key to strafe right.
+- Use the **A** key to turn left.
+- Use the **D** key to turn right.
 
-### Introducing SDL2 and Raycasting for Understanding
-- **SDL2**: SDL2 is a powerful library that simplifies the process of creating graphical applications. It provides functions for handling windows, rendering graphics, and capturing user input.
-- **Raycasting**: Raycasting is a rendering technique used to create a 3D perspective effect in 2D environments. It involves casting rays from the player's viewpoint and calculating intersections with objects in the scene to determine what is visible.
+- Press and hold the **Up Arrow** key to move forward continuously.
+- Press and hold the **Down Arrow** key to move backward continuously.
+- Press and hold the **Left Arrow** key to turn left continuously.
+- Press and hold the **Right Arrow** key to turn right continuously.
+
+- Press the **Spacebar** to toggle rain effects on and off.
+
 
 ### About Me
-I'm passionate about game development and enjoy exploring different techniques to create immersive gaming experiences. This project is a result of my experimentation with raycasting and SDL2.
+Follow me on Twitter 🐦, connect with me on LinkedIn 🔗, and check out my GitHub 🐙. You won't be disappointed!
+
+👉 Twitter: https://twitter.com/NdiranguMuturi1
+👉 LinkedIn: https://www.linkedin.com/in/isaac-muturi-3b6b2b237
+👉 GitHub: https://github.com/Isaac-Ndirangu-Muturi-749
+
+So, what are you waiting for? Join me on my tech journey and learn something new today! 🚀🌟
 
 ### Thanks
-Thank you for checking out the Maze 3D Game project! Feel free to explore the code, make modifications, and have fun navigating through the maze. If you have any questions or suggestions, please don't hesitate to reach out.
+Thank you for checking out the Maze 3D Game project! Feel free to explore the code, make modifications, and have fun navigating through the maze.
 
-**Happy gaming!**
+**!HAPPY GAMING!**
