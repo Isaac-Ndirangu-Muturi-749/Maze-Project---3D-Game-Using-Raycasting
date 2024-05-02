@@ -1,4 +1,4 @@
-**Project Title: Maze 3D Game Using Raycasting**
+# Maze Project: 3D Game Using Raycasting
 
 ![Maze 3D Game](./images/maze_game_screenshot.png)
 
@@ -49,6 +49,7 @@ After compiling the project, you can run the executable:
 - First-person perspective navigation.
 - Rendering of a 3D maze using raycasting techniques.
 - Keyboard controls for movement (WASD for navigation).
+- Make it rain (stop / start the rain with SPACEBAR)
 
 ### How to Control or Activate Features
 
