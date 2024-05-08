@@ -1,19 +1,16 @@
 #ifndef WEAPON_H
 #define WEAPON_H
 
-#include "textures.h" // Assuming you have a textures.h header
+#include <SDL2/SDL_image.h>
 
-#define NUM_WEAPONS 2 // Update this with the number of weapons
+#include "upng.h"
+#include "main.h"
+#include "window.h"
 
-typedef struct {
-    texture_t texture;
-    int width;
-    int height;
-} weapon_texture_t;
-
-extern weapon_texture_t weaponTextures[NUM_WEAPONS];
+#define NUM_WEAPONS 1
 
 void loadWeaponTextures(void);
 void freeWeaponTextures(void);
+void renderWeapon(void);
 
 #endif /* WEAPON_H */

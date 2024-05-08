@@ -1,67 +1,63 @@
 #include "../headers/window.h"
 
-// Define static variables
 SDL_Renderer *renderer;
 color_t *colorBuffer;
 SDL_Texture *colorBufferTexture;
 SDL_Window *window;
 
 
-/**
- * initializeWindow - Initialize window to display the maze
- * Return: true in case of success, false if it fails
-*/
-bool initializeWindow(void)
-{
-	SDL_DisplayMode display_mode;
-	int fullScreenWidth, fullScreenHeight;
+bool initializeWindow(void) {
+	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+		fprintf(stderr, "Error initializing SDL: %s\n", SDL_GetError());
+		return false;
+	}
 
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
-	{
-		fprintf(stderr, "Error initializing SDL.\n");
-		return (false);
+	SDL_DisplayMode displayMode;
+	if (SDL_GetCurrentDisplayMode(0, &displayMode) != 0) {
+		fprintf(stderr, "Error getting display mode: %s\n", SDL_GetError());
+		SDL_Quit();
+		return false;
 	}
-	SDL_GetCurrentDisplayMode(0, &display_mode);
-	fullScreenWidth = display_mode.w;
-	fullScreenHeight = display_mode.h;
-	window = SDL_CreateWindow(
-		NULL,
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		fullScreenWidth,
-		fullScreenHeight,
-		SDL_WINDOW_BORDERLESS
-	);
-	if (!window)
-	{
-		fprintf(stderr, "Error creating SDL window.\n");
-		return (false);
+
+	window = SDL_CreateWindow(NULL, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+							  displayMode.w, displayMode.h, SDL_WINDOW_BORDERLESS);
+	if (!window) {
+		fprintf(stderr, "Error creating SDL window: %s\n", SDL_GetError());
+		SDL_Quit();
+		return false;
 	}
-	renderer = SDL_CreateRenderer(window, -1, 1);
-	if (!renderer)
-	{
-		fprintf(stderr, "Error creating SDL renderer.\n");
-		return (false);
+
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	if (!renderer) {
+		fprintf(stderr, "Error creating SDL renderer: %s\n", SDL_GetError());
+		SDL_DestroyWindow(window);
+		SDL_Quit();
+		return false;
 	}
+
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-	/* allocate the total amount of bytes in memory to hold our colorbuffer */
-	colorBuffer = malloc(sizeof(color_t) * SCREEN_WIDTH * SCREEN_HEIGHT);
+	// Allocate memory for the color buffer
+	colorBuffer = malloc(sizeof(color_t) * WINDOW_WIDTH * WINDOW_HEIGHT);
+	if (!colorBuffer) {
+		fprintf(stderr, "Error allocating memory for color buffer\n");
+		destroyWindow();
+		return false;
+	}
 
-	/* create an SDL_Texture to display the colorbuffer */
+	// Create an SDL_Texture to display the color buffer
 	colorBufferTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32,
-		SDL_TEXTUREACCESS_STREAMING, SCREEN_WIDTH, SCREEN_HEIGHT);
+											SDL_TEXTUREACCESS_STREAMING, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!colorBufferTexture) {
+		fprintf(stderr, "Error creating color buffer texture: %s\n", SDL_GetError());
+		destroyWindow();
+		return false;
+	}
 
-	return (true);
+	return true;
 }
 
-
-/**
- * destroyWindow - destroy window when the game is over
- *
-*/
-void destroyWindow(void)
-{
+void destroyWindow(void) {
 	free(colorBuffer);
 	SDL_DestroyTexture(colorBufferTexture);
 	SDL_DestroyRenderer(renderer);

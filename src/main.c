@@ -2,78 +2,91 @@
 
 bool GameRunning = false;
 int TicksLastFrame;
-player_t player;
 
 /**
- * main - main function
+ * Main function
  * Return: 0
 */
-int main(void)
-{
-	GameRunning = initializeWindow();
+int main(void) {
+	// Seed random number generator
+	srand(SDL_GetTicks());
 
-	setup_game();
+	setupGame();
 
-	while (GameRunning)
-	{
+	while (GameRunning) {
 		handleInput();
-		update_game();
-		render_game();
+		updateGame();
+		renderGame();
+		// Delay to control frame rate
+		SDL_Delay(10);
 	}
-	destroy_game();
-	return (0);
+
+	destroyGame();
+	return 0;
 }
 
-
 /**
- * setup_game - initialize player variables and load wall textures
- *
+ * Setup game - initialize player variables and load textures
 */
-void setup_game(void)
-{
+void setupGame(void) {
+	GameRunning = initializeWindow();
+	initializePlayer();
+	initializeRaindrops();
 
-	player.x = SCREEN_WIDTH / 2;
-	player.y = SCREEN_HEIGHT / 2;
-	player.width = 1;
-	player.height = 30;
-	player.walkDirection = 0;
-	player.walkSpeed = 100;
-	player.turnDirection = 0;
-	player.turnSpeed = 45 * (PI / 180);
-	player.rotationAngle = PI / 2;
-	WallTexturesready();
+	// Load textures
+	loadFloorTextures();
+	loadCeilingTextures();
+	loadWallTextures();
+	loadWeaponTextures();
 }
 
-
 /**
- * update_game - update_game delta time, the ticks last frame
- *          the player movement and the ray casting
- *
+ * Update game - update delta time, player movement, and ray casting
 */
-void update_game(void)
-{
-	float DeltaTime;
+void updateGame(void) {
+	float deltaTime;
 	int timeToWait = FRAME_TIME_LENGTH - (SDL_GetTicks() - TicksLastFrame);
 
-	if (timeToWait > 0 && timeToWait <= FRAME_TIME_LENGTH)
-	{
+	if (timeToWait > 0 && timeToWait <= FRAME_TIME_LENGTH) {
 		SDL_Delay(timeToWait);
 	}
-	DeltaTime = (SDL_GetTicks() - TicksLastFrame) / 1000.0f;
 
+	deltaTime = (SDL_GetTicks() - TicksLastFrame) / 1000.0f;
 	TicksLastFrame = SDL_GetTicks();
 
-	movePlayer(DeltaTime);
+	movePlayer(deltaTime);
 	castAllRays();
 }
 
 
 /**
- * Destroy - free wall textures and destroy window
- *
+ * Render game - call functions needed for rendering
 */
-void destroy_game(void)
-{
+void renderGame(void) {
+	clearColorBuffer(0xFF000000);
+	renderWalls();
+	renderMap();
+	renderRays();
+	renderPlayer();
+	renderColorBuffer();
+	renderWeapon();
+	// Update and render raindrops if raining
+	if (isRaining) {
+		updateRaindrops();
+		renderRaindrops();
+	}
+	SDL_RenderPresent(renderer);
+
+}
+
+
+/**
+ * Destroy game - free textures and destroy window
+*/
+void destroyGame(void) {
+	freeWeaponTextures();
 	freeWallTextures();
+	freeCeilingTextures();
+	freeFloorTextures();
 	destroyWindow();
 }

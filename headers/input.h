@@ -2,15 +2,12 @@
 #define INPUT_H
 
 #include <SDL2/SDL.h>
-#include "player.h"
+#include <stdbool.h>
 
+#include "main.h"
 
-extern bool GameRunning;
-
-
-// Function prototypes
 void handleInput(void);
-void SDL_KEYDOWN_FUNC(SDL_Event event);
-void SDL_KEYUP_FUNC(SDL_Event event);
+void handleKeyDown(SDL_Keycode key);
+void handleKeyUp(SDL_Keycode key);
 
 #endif /* INPUT_H */

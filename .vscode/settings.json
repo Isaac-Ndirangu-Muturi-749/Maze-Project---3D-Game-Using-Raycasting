@@ -12,6 +12,12 @@
 		"raycast.h": "c",
 		"render.h": "c",
 		"utilities.h": "c",
-		"window.h": "c"
+		"window.h": "c",
+		"upng.h": "c",
+		"rain.h": "c",
+		"color_buffer.h": "c",
+		"draw.h": "c",
+		"stdlib.h": "c",
+		"floor.h": "c"
 	}
 }

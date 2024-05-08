@@ -3,12 +3,15 @@
 
 #include <stdbool.h>
 #include <SDL2/SDL.h>
-#include "render.h"
 
-#include "main.h"
+#include "map.h"
 
 #include <stdint.h>
 typedef uint32_t color_t;
+
+#define WINDOW_WIDTH (MAP_NUM_COLS * TILE_SIZE)
+#define WINDOW_HEIGHT (MAP_NUM_ROWS * TILE_SIZE)
+
 
 // Function prototypes
 bool initializeWindow(void);

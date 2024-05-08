@@ -1,74 +1,71 @@
 #include "../headers/input.h"
 
-
-/**
- * handleInput - process input from the keyboard
- *
-*/
-void handleInput(void)
-{
+void handleInput(void) {
 	SDL_Event event;
 
-	SDL_PollEvent(&event);
+	while (SDL_PollEvent(&event)) {
+		switch (event.type) {
+			case SDL_QUIT:
+				GameRunning = false;
+				break;
+			case SDL_KEYDOWN:
+				handleKeyDown(event.key.keysym.sym);
+				break;
+			case SDL_KEYUP:
+				handleKeyUp(event.key.keysym.sym);
+				break;
+		}
+	}
 
-	if (event.type == SDL_QUIT)
-		GameRunning = false;
-	else if (event.type == SDL_KEYDOWN)
-		SDL_KEYDOWN_FUNC(event);
-	else if (event.type == SDL_KEYUP)
-		SDL_KEYUP_FUNC(event);
+	// Add rain toggling logic
+	const Uint8 *keyboardState = SDL_GetKeyboardState(NULL);
+	if (keyboardState[SDL_SCANCODE_SPACE])
+		isRaining = !isRaining; // Toggle rain on/off with spacebar
 }
 
-
-/**
- * SDL_KEYDOWN_FUNC - process input when a key is down
- * @event: union that contains structures for the different event types
-*/
-
-void SDL_KEYDOWN_FUNC(SDL_Event event)
-{
-	if (event.key.keysym.sym == SDLK_ESCAPE)
-		GameRunning = false;
-	if (event.key.keysym.sym == SDLK_UP)
-		player.walkDirection = +1;
-	if (event.key.keysym.sym == SDLK_DOWN)
-		player.walkDirection = -1;
-	if (event.key.keysym.sym == SDLK_RIGHT)
-		player.turnDirection = +1;
-	if (event.key.keysym.sym == SDLK_LEFT)
-		player.turnDirection = -1;
-	if (event.key.keysym.sym == SDLK_w)
-		player.walkDirection = +1;
-	if (event.key.keysym.sym == SDLK_s)
-		player.walkDirection = -1;
-	if (event.key.keysym.sym == SDLK_a)
-		player.turnDirection = -1;
-	if (event.key.keysym.sym == SDLK_d)
-		player.turnDirection = +1;
+void handleKeyDown(SDL_Keycode key) {
+	switch (key) {
+		case SDLK_ESCAPE:
+			GameRunning = false;
+			break;
+		case SDLK_UP:
+			player.walkDirection = +1;
+			break;
+		case SDLK_DOWN:
+			player.walkDirection = -1;
+			break;
+		case SDLK_RIGHT:
+			player.turnDirection = +1;
+			break;
+		case SDLK_LEFT:
+			player.turnDirection = -1;
+			break;
+		case SDLK_w:
+			player.walkDirection = +1;
+			break;
+		case SDLK_s:
+			player.walkDirection = -1;
+			break;
+		case SDLK_a:
+			player.turnDirection = -1;
+			break;
+		case SDLK_d:
+			player.turnDirection = +1;
+			break;
+	}
 }
 
-
-/**
- * SDL_KEYUP_FUNC - process input when a key is up
- * @event: union that contains structures for the different event types
-*/
-
-void SDL_KEYUP_FUNC(SDL_Event event)
-{
-	if (event.key.keysym.sym == SDLK_UP)
-		player.walkDirection = 0;
-	if (event.key.keysym.sym == SDLK_DOWN)
-		player.walkDirection = 0;
-	if (event.key.keysym.sym == SDLK_RIGHT)
-		player.turnDirection = 0;
-	if (event.key.keysym.sym == SDLK_LEFT)
-		player.turnDirection = 0;
-	if (event.key.keysym.sym == SDLK_w)
-		player.walkDirection = 0;
-	if (event.key.keysym.sym == SDLK_s)
-		player.walkDirection = 0;
-	if (event.key.keysym.sym == SDLK_a)
-		player.turnDirection = 0;
-	if (event.key.keysym.sym == SDLK_d)
-		player.turnDirection = 0;
+void handleKeyUp(SDL_Keycode key) {
+	switch (key) {
+		case SDLK_UP:
+		case SDLK_DOWN:
+			player.walkDirection = 0;
+			break;
+		case SDLK_RIGHT:
+		case SDLK_LEFT:
+		case SDLK_w:
+		case SDLK_s:
+			player.turnDirection = 0;
+			break;
+	}
 }
