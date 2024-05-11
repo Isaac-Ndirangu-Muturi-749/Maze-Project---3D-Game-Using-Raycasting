@@ -50,11 +50,11 @@ void renderFloor(int wallBottomPixel, color_t *texelColor, int x) {
         distance = (ratio * PROJECTION_PLANE) / cos(rays[x].rayAngle - player.rotationAngle);
 
         // Calculate texture offsets
-        textureOffsetY = (int)fabs((distance * sin(rays[x].rayAngle)) + player.y);
-        textureOffsetX = (int)fabs((distance * cos(rays[x].rayAngle)) + player.x);
+        textureOffsetY = (int)abs((distance * sin(rays[x].rayAngle)) + player.y);
+        textureOffsetX = (int)abs((distance * cos(rays[x].rayAngle)) + player.x);
 
-        textureOffsetX = (int)(fabs(textureOffsetX * texture_width / 30) % texture_width);
-        textureOffsetY = (int)(fabs(textureOffsetY * texture_height / 30) % texture_height);
+        textureOffsetX = (int)(abs(textureOffsetX * texture_width / 30) % texture_width);
+        textureOffsetY = (int)(abs(textureOffsetY * texture_height / 30) % texture_height);
 
         // Fetch texel color from the floor texture buffer
         *texelColor = floorTextures[0].texture_buffer[(texture_width * textureOffsetY) + textureOffsetX];
