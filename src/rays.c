@@ -1,53 +1,65 @@
 #include "../headers/rays.h"
 
+// Array to store information about each ray
 ray_t rays[NUM_RAYS];
 
+// Variables to track if wall hits are found and their positions
 static bool foundHorzWallHit, foundVertWallHit;
 static float horzWallHitX, horzWallHitY, vertWallHitX, vertWallHitY;
 static int horzWallContent, vertWallContent;
 
+// Function to cast a single ray
 void castRay(float rayAngle, int stripId) {
-	rayAngle = fmodf(rayAngle, TWO_PI);
-	if (rayAngle < 0)
-		rayAngle = TWO_PI + rayAngle;
+    // Normalize ray angle to be within [0, 2*PI)
+    rayAngle = fmodf(rayAngle, TWO_PI);
+    if (rayAngle < 0)
+        rayAngle = TWO_PI + rayAngle;
 
-	horzIntersection(rayAngle);
-	vertIntersection(rayAngle);
+    // Cast rays horizontally and vertically to find intersections
+    horzIntersection(rayAngle);
+    vertIntersection(rayAngle);
 
-	float horzHitDistance = foundHorzWallHit
-								? distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
-								: FLT_MAX;
-	float vertHitDistance = foundVertWallHit
-								? distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
-								: FLT_MAX;
+    // Calculate distances to wall hits
+    float horzHitDistance = foundHorzWallHit
+                                ? distanceBetweenPoints(player.x, player.y, horzWallHitX, horzWallHitY)
+                                : FLT_MAX;
+    float vertHitDistance = foundVertWallHit
+                                ? distanceBetweenPoints(player.x, player.y, vertWallHitX, vertWallHitY)
+                                : FLT_MAX;
 
-	if (vertHitDistance < horzHitDistance) {
-		rays[stripId] = (ray_t){
-			.distance = vertHitDistance,
-			.wallHitX = vertWallHitX,
-			.wallHitY = vertWallHitY,
-			.wallHitContent = vertWallContent,
-			.wasHitVertical = true,
-			.rayAngle = rayAngle
-		};
-	} else {
-		rays[stripId] = (ray_t){
-			.distance = horzHitDistance,
-			.wallHitX = horzWallHitX,
-			.wallHitY = horzWallHitY,
-			.wallHitContent = horzWallContent,
-			.wasHitVertical = false,
-			.rayAngle = rayAngle
-		};
-	}
+    // Store ray information based on which wall hit is closer
+    if (vertHitDistance < horzHitDistance) {
+        rays[stripId] = (ray_t){
+            .distance = vertHitDistance,
+            .wallHitX = vertWallHitX,
+            .wallHitY = vertWallHitY,
+            .wallHitContent = vertWallContent,
+            .wasHitVertical = true,
+            .rayAngle = rayAngle
+        };
+    } else {
+        rays[stripId] = (ray_t){
+            .distance = horzHitDistance,
+            .wallHitX = horzWallHitX,
+            .wallHitY = horzWallHitY,
+            .wallHitContent = horzWallContent,
+            .wasHitVertical = false,
+            .rayAngle = rayAngle
+        };
+    }
 }
 
+// Function to cast all rays
 void castAllRays(void) {
-	for (int col = 0; col < NUM_RAYS; col++) {
-		float rayAngle = player.rotationAngle + atan((col - NUM_RAYS / 2) / PROJECTION_PLANE);
-		castRay(rayAngle, col);
-	}
+    // Loop through each column and cast a ray
+    for (int col = 0; col < NUM_RAYS; col++) {
+        // Calculate ray angle for current column
+        float rayAngle = player.rotationAngle + atan((col - NUM_RAYS / 2) / PROJECTION_PLANE);
+        // Cast the ray and store the result
+        castRay(rayAngle, col);
+    }
 }
+
 
 
 /**

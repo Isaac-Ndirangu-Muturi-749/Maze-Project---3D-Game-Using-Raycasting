@@ -1,17 +1,23 @@
 #include "../headers/player.h"
 
+// Structure to store player information
 player_t player;
 
+// Function to initialize player properties
 void initializePlayer(void) {
-	player.x = WINDOW_WIDTH / 2;
-	player.y = WINDOW_HEIGHT / 2;
-	player.width = 1;
-	player.height = 30;
-	player.walkDirection = 0;
-	player.walkSpeed = 100;
-	player.turnDirection = 0;
-	player.turnSpeed = 45 * (PI / 180);
-	player.rotationAngle = PI / 2;
+    // Set initial player position at the center of the window
+    player.x = WINDOW_WIDTH / 2;
+    player.y = WINDOW_HEIGHT / 2;
+    // Set player dimensions
+    player.width = 1;
+    player.height = 30;
+    // Set initial movement and turning directions and speeds
+    player.walkDirection = 0;
+    player.walkSpeed = 100;
+    player.turnDirection = 0;
+    player.turnSpeed = 45 * (PI / 180); // Convert degrees to radians
+    // Set initial rotation angle
+    player.rotationAngle = PI / 2;
 }
 
 

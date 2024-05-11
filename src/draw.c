@@ -10,6 +10,7 @@ void drawPixel(int x, int y, color_t color) {
 	colorBuffer[(WINDOW_WIDTH * y) + x] = color;
 }
 
+
 /**
  * drawLine - Draw a line
  * @x0: X coordinate init
@@ -19,26 +20,31 @@ void drawPixel(int x, int y, color_t color) {
  * @color: Pixel color
  */
 void drawLine(int x0, int y0, int x1, int y1, color_t color) {
-	float xIncrement, yIncrement, currentX, currentY;
-	int i, longestSideLength, deltaX, deltaY;
+    float xIncrement, yIncrement, currentX, currentY;
+    int i, longestSideLength, deltaX, deltaY;
 
-	deltaX = (x1 - x0);
-	deltaY = (y1 - y0);
+    deltaX = (x1 - x0);
+    deltaY = (y1 - y0);
 
-	longestSideLength = (abs(deltaX) >= abs(deltaY)) ? abs(deltaX) : abs(deltaY);
+    // Determine the longest side length
+    longestSideLength = (abs(deltaX) >= abs(deltaY)) ? abs(deltaX) : abs(deltaY);
 
-	xIncrement = deltaX / (float)longestSideLength;
-	yIncrement = deltaY / (float)longestSideLength;
+    // Calculate the increments for each step along the line
+    xIncrement = deltaX / (float)longestSideLength;
+    yIncrement = deltaY / (float)longestSideLength;
 
-	currentX = x0;
-	currentY = y0;
+    // Initialize the starting point
+    currentX = x0;
+    currentY = y0;
 
-	for (i = 0; i < longestSideLength; i++) {
-		drawPixel(round(currentX), round(currentY), color);
-		currentX += xIncrement;
-		currentY += yIncrement;
-	}
+    // Draw the line by stepping along it and drawing pixels
+    for (i = 0; i < longestSideLength; i++) {
+        drawPixel(round(currentX), round(currentY), color);
+        currentX += xIncrement;
+        currentY += yIncrement;
+    }
 }
+
 
 /**
  * drawRect - Draw a rectangle

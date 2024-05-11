@@ -1,5 +1,6 @@
 #include "../headers/collision.h"
 
+
 /**
  * DetectCollision - Checks if there could be a collision
  * with the wall in the next player advance

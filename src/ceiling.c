@@ -36,32 +36,32 @@ void freeCeilingTextures(void) {
  * @texelColor: texture color for current pixel
  * @x: current element in the rays array
 */
-void renderCeiling(int wallTopPixel, color_t *texelColor, int x)
-{
-	int y, texture_width, texture_height, textureOffsetY, textureOffsetX;
+void renderCeiling(int wallTopPixel, color_t *texelColor, int x) {
+    int y, texture_width, texture_height, textureOffsetY, textureOffsetX;
 
-	texture_width = ceilingTextures[0].width;
-	texture_height = ceilingTextures[0].height;
+    // Retrieve texture dimensions
+    texture_width = ceilingTextures[0].width;
+    texture_height = ceilingTextures[0].height;
 
-	for (y = 0; y < wallTopPixel; y++)
-	{
-		float distance, ratio;
+    for (y = 0; y < wallTopPixel; y++) {
+        float distance, ratio;
 
-		ratio = player.height / (y - WINDOW_HEIGHT / 2);
-		distance = (ratio * PROJECTION_PLANE)
-					/ cos(rays[x].rayAngle - player.rotationAngle);
+        // Calculate distance and ratio
+        ratio = player.height / (y - WINDOW_HEIGHT / 2);
+        distance = (ratio * PROJECTION_PLANE) / cos(rays[x].rayAngle - player.rotationAngle);
 
-		textureOffsetY = (int)abs((-distance * sin(rays[x].rayAngle)) + player.y);
-		textureOffsetX = (int)abs((-distance * cos(rays[x].rayAngle)) + player.x);
+        // Calculate texture offsets
+        textureOffsetY = (int)abs((-distance * sin(rays[x].rayAngle)) + player.y);
+        textureOffsetX = (int)abs((-distance * cos(rays[x].rayAngle)) + player.x);
 
-		textureOffsetX = (int)(abs(textureOffsetX * texture_width / 40)
-								% texture_width);
-		textureOffsetY = (int)(abs(textureOffsetY * texture_height / 40)
-								% texture_height);
+        // Calculate texture coordinates with respect to texture size
+        textureOffsetX = (int)(abs(textureOffsetX * texture_width / 40) % texture_width);
+        textureOffsetY = (int)(abs(textureOffsetY * texture_height / 40) % texture_height);
 
-		*texelColor = ceilingTextures[0].
-					  texture_buffer[(texture_width * textureOffsetY) + textureOffsetX];
-		drawPixel(x, y, *texelColor);
+        // Retrieve texel color from texture buffer
+        *texelColor = ceilingTextures[0].texture_buffer[(texture_width * textureOffsetY) + textureOffsetX];
 
-	}
+        // Draw texel color to screen
+        drawPixel(x, y, *texelColor);
+    }
 }

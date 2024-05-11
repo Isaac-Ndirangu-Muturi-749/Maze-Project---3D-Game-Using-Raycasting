@@ -40,51 +40,60 @@ void freeWallTextures(void) {
 int wallTopPixel;
 int wallBottomPixel;
 
-// Function to render wall projection
+// Function to render walls based on raycasting results
 void renderWalls(void)
 {
-	int x, y, texNum, texture_width, texture_height,
-		textureOffsetX, wallBottomPixel, wallStripHeight,
-		wallTopPixel, distanceFromTop, textureOffsetY;
-	float perpDistance, projectedWallHeight;
-	color_t texelColor;
+    int x, y, texNum, texture_width, texture_height,
+        textureOffsetX, wallBottomPixel, wallStripHeight,
+        wallTopPixel, distanceFromTop, textureOffsetY;
+    float perpDistance, projectedWallHeight;
+    color_t texelColor;
 
-	for (x = 0; x < NUM_RAYS; x++)
-	{
-		perpDistance = rays[x].distance * cos(rays[x].rayAngle
-							- player.rotationAngle);
-		projectedWallHeight = (TILE_SIZE / perpDistance) * PROJECTION_PLANE;
-		wallStripHeight = (int)projectedWallHeight;
-		wallTopPixel = (WINDOW_HEIGHT / 2) - (wallStripHeight / 2);
-		wallTopPixel = wallTopPixel < 0 ? 0 : wallTopPixel;
-		wallBottomPixel = (WINDOW_HEIGHT / 2) + (wallStripHeight / 2);
-		wallBottomPixel = wallBottomPixel > WINDOW_HEIGHT
-							? WINDOW_HEIGHT : wallBottomPixel;
+    // Loop through each ray
+    for (x = 0; x < NUM_RAYS; x++)
+    {
+        // Calculate perpendicular distance and projected wall height
+        perpDistance = rays[x].distance * cos(rays[x].rayAngle - player.rotationAngle);
+        projectedWallHeight = (TILE_SIZE / perpDistance) * PROJECTION_PLANE;
+        wallStripHeight = (int)projectedWallHeight;
 
-		texNum = rays[x].wallHitContent - 1;
-		texture_width = wallTextures[texNum].width;
-		texture_height = wallTextures[texNum].height;
-		renderFloor(wallBottomPixel, &texelColor, x);
-		renderCeiling(wallTopPixel, &texelColor, x);
+        // Calculate top and bottom pixels of the wall strip
+        wallTopPixel = (WINDOW_HEIGHT / 2) - (wallStripHeight / 2);
+        wallTopPixel = wallTopPixel < 0 ? 0 : wallTopPixel;
+        wallBottomPixel = (WINDOW_HEIGHT / 2) + (wallStripHeight / 2);
+        wallBottomPixel = wallBottomPixel > WINDOW_HEIGHT ? WINDOW_HEIGHT : wallBottomPixel;
 
-		if (rays[x].wasHitVertical)
-			textureOffsetX = (int)rays[x].wallHitY % TILE_SIZE;
-		else
-			textureOffsetX = (int)rays[x].wallHitX % TILE_SIZE;
+        // Determine texture number and dimensions
+        texNum = rays[x].wallHitContent - 1;
+        texture_width = wallTextures[texNum].width;
+        texture_height = wallTextures[texNum].height;
 
-		for (y = wallTopPixel; y < wallBottomPixel; y++)
-		{
-			distanceFromTop = y + (wallStripHeight / 2) - (WINDOW_HEIGHT / 2);
-			textureOffsetY = distanceFromTop *
-								((float)texture_height / wallStripHeight);
-			texelColor = wallTextures[texNum].
-						 texture_buffer[(texture_width * textureOffsetY) + textureOffsetX];
-			if (rays[x].wasHitVertical)
-				changeColorIntensity(&texelColor, 0.5);
-			drawPixel(x, y, texelColor);
-		}
-	}
+        // Render floor and ceiling
+        renderFloor(wallBottomPixel, &texelColor, x);
+        renderCeiling(wallTopPixel, &texelColor, x);
+
+        // Calculate texture offset
+        if (rays[x].wasHitVertical)
+            textureOffsetX = (int)rays[x].wallHitY % TILE_SIZE;
+        else
+            textureOffsetX = (int)rays[x].wallHitX % TILE_SIZE;
+
+        // Loop through pixels in the wall strip
+        for (y = wallTopPixel; y < wallBottomPixel; y++)
+        {
+            distanceFromTop = y + (wallStripHeight / 2) - (WINDOW_HEIGHT / 2);
+            textureOffsetY = distanceFromTop * ((float)texture_height / wallStripHeight);
+            // Get texel color from texture buffer
+            texelColor = wallTextures[texNum].texture_buffer[(texture_width * textureOffsetY) + textureOffsetX];
+            // Darken color if the wall was hit vertically
+            if (rays[x].wasHitVertical)
+                changeColorIntensity(&texelColor, 0.5);
+            // Draw pixel on the screen
+            drawPixel(x, y, texelColor);
+        }
+    }
 }
+
 
 
 /**

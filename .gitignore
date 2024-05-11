@@ -1,1 +1,4 @@
 headers/*.gch
+.vscode
+a.out
+cccc
