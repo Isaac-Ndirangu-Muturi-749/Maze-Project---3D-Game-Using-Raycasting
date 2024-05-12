@@ -40,8 +40,8 @@ void renderWeapon(void)
 	uint32_t weaponHeight = loadedSurface->h;
 
 	// Calculate the position to render the weapon texture
-	int weaponX = (WINDOW_WIDTH - 200) / 2;
-	int weaponY = WINDOW_HEIGHT - 270; // Adjusted position
+	int weaponX = (WINDOW_WIDTH + 200) / 2;
+	int weaponY = WINDOW_HEIGHT + 35; // Adjusted position
 
 
 	// Create an SDL_Rect structure for the weapon texture position and dimensions
