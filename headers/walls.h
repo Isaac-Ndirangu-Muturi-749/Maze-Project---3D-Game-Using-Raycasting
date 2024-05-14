@@ -18,8 +18,15 @@ typedef uint32_t color_t;
 // Function to load wall textures
 void loadWallTextures(void);
 void freeWallTextures(void);
+
 void renderWalls(void);
-void changeColorIntensity(color_t *color, float factor);
+float calculatePerpendicularDistance(int rayIndex);
+float calculateProjectedWallHeight(float perpDistance);
+void calculateWallStripPixels(float projectedWallHeight, int *wallTopPixel, int *wallBottomPixel);
+int calculateTextureOffsetX(int rayIndex);
+void renderFloorAndCeiling(int wallTopPixel, int wallBottomPixel, int rayIndex);
+void renderWallStrip(int rayIndex, int wallTopPixel, int wallBottomPixel, int textureOffsetX, int textureNum, int textureWidth, int textureHeight, float projectedWallHeight, int wallStripHeight);
+void adjustColorIntensity(color_t *color, float factor);
 
 extern int wallTopPixel;
 extern int wallBottomPixel;

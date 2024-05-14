@@ -8,9 +8,6 @@ int TicksLastFrame;
  * Return: 0
 */
 int main(void) {
-	// Seed random number generator
-	srand(SDL_GetTicks());
-
 	setupGame();
 
 	while (GameRunning) {
@@ -37,26 +34,36 @@ void setupGame(void) {
 	loadFloorTextures();
 	loadCeilingTextures();
 	loadWallTextures();
-	loadWeaponTextures();
 }
+
 
 /**
  * Update game - update delta time, player movement, and ray casting
-*/
+ */
 void updateGame(void) {
-	float deltaTime;
-	int timeToWait = FRAME_TIME_LENGTH - (SDL_GetTicks() - TicksLastFrame);
+    // Seed random number generator
+    srand(SDL_GetTicks());
 
-	if (timeToWait > 0 && timeToWait <= FRAME_TIME_LENGTH) {
-		SDL_Delay(timeToWait);
-	}
+    // Calculate delta time
+    float deltaTime;
+    int timeToWait = FRAME_TIME_LENGTH - (SDL_GetTicks() - TicksLastFrame);
 
-	deltaTime = (SDL_GetTicks() - TicksLastFrame) / 1000.0f;
-	TicksLastFrame = SDL_GetTicks();
+    // Ensure the frame rate is consistent by waiting if necessary
+    if (timeToWait > 0 && timeToWait <= FRAME_TIME_LENGTH) {
+        SDL_Delay(timeToWait);
+    }
 
-	movePlayer(deltaTime);
-	castAllRays();
+    // Calculate delta time in seconds
+    deltaTime = (SDL_GetTicks() - TicksLastFrame) / 1000.0f;
+    TicksLastFrame = SDL_GetTicks();
+
+    // Update player movement based on delta time
+    movePlayer(deltaTime);
+
+    // Cast rays to update the rendering of the game world
+    castAllRays();
 }
+
 
 
 /**
@@ -84,7 +91,6 @@ void renderGame(void) {
  * Destroy game - free textures and destroy window
 */
 void destroyGame(void) {
-	freeWeaponTextures();
 	freeWallTextures();
 	freeCeilingTextures();
 	freeFloorTextures();

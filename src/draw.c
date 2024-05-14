@@ -2,29 +2,29 @@
 
 /**
  * drawPixel - Assign a color to each pixel
- * @x: X pixel coordinate
- * @y: Y pixel coordinate
- * @color: Pixel color
+ * @pixelX: X pixel coordinate
+ * @pixelY: Y pixel coordinate
+ * @pixelColor: Pixel color
  */
-void drawPixel(int x, int y, color_t color) {
-	colorBuffer[(WINDOW_WIDTH * y) + x] = color;
+void drawPixel(int pixelX, int pixelY, color_t pixelColor) {
+	colorBuffer[(WINDOW_WIDTH * pixelY) + pixelX] = pixelColor;
 }
 
 
 /**
  * drawLine - Draw a line
- * @x0: X coordinate init
- * @y0: Y coordinate init
- * @x1: X coordinate end
- * @y1: Y coordinate end
- * @color: Pixel color
+ * @startX: X coordinate of the starting point
+ * @startY: Y coordinate of the starting point
+ * @endX: X coordinate of the ending point
+ * @endY: Y coordinate of the ending point
+ * @lineColor: Color of the line
  */
-void drawLine(int x0, int y0, int x1, int y1, color_t color) {
+void drawLine(int startX, int startY, int endX, int endY, color_t lineColor) {
     float xIncrement, yIncrement, currentX, currentY;
     int i, longestSideLength, deltaX, deltaY;
 
-    deltaX = (x1 - x0);
-    deltaY = (y1 - y0);
+    deltaX = (endX - startX);
+    deltaY = (endY - startY);
 
     // Determine the longest side length
     longestSideLength = (abs(deltaX) >= abs(deltaY)) ? abs(deltaX) : abs(deltaY);
@@ -34,12 +34,12 @@ void drawLine(int x0, int y0, int x1, int y1, color_t color) {
     yIncrement = deltaY / (float)longestSideLength;
 
     // Initialize the starting point
-    currentX = x0;
-    currentY = y0;
+    currentX = startX;
+    currentY = startY;
 
     // Draw the line by stepping along it and drawing pixels
     for (i = 0; i < longestSideLength; i++) {
-        drawPixel(round(currentX), round(currentY), color);
+        drawPixel(round(currentX), round(currentY), lineColor);
         currentX += xIncrement;
         currentY += yIncrement;
     }
@@ -48,18 +48,18 @@ void drawLine(int x0, int y0, int x1, int y1, color_t color) {
 
 /**
  * drawRect - Draw a rectangle
- * @x: X coordinate
- * @y: Y coordinate
- * @width: Rectangle width
- * @height: Rectangle height
- * @color: Pixel color
+ * @topLeftX: X coordinate of the top-left corner
+ * @topLeftY: Y coordinate of the top-left corner
+ * @rectWidth: Width of the rectangle
+ * @rectHeight: Height of the rectangle
+ * @rectColor: Color of the rectangle
  */
-void drawRect(int x, int y, int width, int height, color_t color) {
+void drawRect(int topLeftX, int topLeftY, int rectWidth, int rectHeight, color_t rectColor) {
 	int i, j;
 
-	for (i = x; i <= (x + width); i++) {
-		for (j = y; j <= (y + height); j++) {
-			drawPixel(i, j, color);
+	for (i = topLeftX; i <= (topLeftX + rectWidth); i++) {
+		for (j = topLeftY; j <= (topLeftY + rectHeight); j++) {
+			drawPixel(i, j, rectColor);
 		}
 	}
 }

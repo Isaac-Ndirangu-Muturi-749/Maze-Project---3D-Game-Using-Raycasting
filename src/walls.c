@@ -1,6 +1,7 @@
 #include "../headers/walls.h"
 
 static texture_t wallTextures[NUM_WALL_TEXTURES];
+
 // Define texture file names for walls
 static const char *wallTextureFileNames[NUM_WALL_TEXTURES] = {
 	"./images/redbrick.png",
@@ -12,6 +13,7 @@ static const char *wallTextureFileNames[NUM_WALL_TEXTURES] = {
 	"./images/bluestone.png",
 	"./images/eagle.png",
 };
+
 
 // Function to load wall textures
 void loadWallTextures(void) {
@@ -26,6 +28,7 @@ void loadWallTextures(void) {
 	}
 }
 
+
 // Function to free wall textures
 void freeWallTextures(void) {
 	for (int i = 0; i < NUM_WALL_TEXTURES; i++) {
@@ -39,75 +42,84 @@ void freeWallTextures(void) {
 
 int wallTopPixel;
 int wallBottomPixel;
+color_t texelColor;
+float projectedWallHeight;
+int wallStripHeight;
 
-// Function to render walls based on raycasting results
-void renderWalls(void)
-{
-    int x, y, texNum, texture_width, texture_height,
-        textureOffsetX, wallBottomPixel, wallStripHeight,
-        wallTopPixel, distanceFromTop, textureOffsetY;
-    float perpDistance, projectedWallHeight;
-    color_t texelColor;
 
-    // Loop through each ray
-    for (x = 0; x < NUM_RAYS; x++)
-    {
-        // Calculate perpendicular distance and projected wall height
-        perpDistance = rays[x].distance * cos(rays[x].rayAngle - player.rotationAngle);
-        projectedWallHeight = (TILE_SIZE / perpDistance) * PROJECTION_PLANE;
-        wallStripHeight = (int)projectedWallHeight;
+void renderWalls(void) {
+    for (int rayIndex = 0; rayIndex < NUM_RAYS; rayIndex++) {
+        float perpDistance = calculatePerpendicularDistance(rayIndex);
+        float projectedWallHeight = calculateProjectedWallHeight(perpDistance);
+        int wallStripHeight = (int)projectedWallHeight;
 
-        // Calculate top and bottom pixels of the wall strip
-        wallTopPixel = (WINDOW_HEIGHT / 2) - (wallStripHeight / 2);
-        wallTopPixel = wallTopPixel < 0 ? 0 : wallTopPixel;
-        wallBottomPixel = (WINDOW_HEIGHT / 2) + (wallStripHeight / 2);
-        wallBottomPixel = wallBottomPixel > WINDOW_HEIGHT ? WINDOW_HEIGHT : wallBottomPixel;
+        int wallTopPixel, wallBottomPixel;
+        calculateWallStripPixels(projectedWallHeight, &wallTopPixel, &wallBottomPixel);
 
-        // Determine texture number and dimensions
-        texNum = rays[x].wallHitContent - 1;
-        texture_width = wallTextures[texNum].width;
-        texture_height = wallTextures[texNum].height;
+        int textureNum = rays[rayIndex].wallHitContent - 1;
+        int textureWidth = wallTextures[textureNum].width;
+        int textureHeight = wallTextures[textureNum].height;
 
         // Render floor and ceiling
-        renderFloor(wallBottomPixel, &texelColor, x);
-        renderCeiling(wallTopPixel, &texelColor, x);
+        renderFloor(wallBottomPixel, &texelColor, rayIndex);
+        renderCeiling(wallTopPixel, &texelColor, rayIndex);
 
-        // Calculate texture offset
-        if (rays[x].wasHitVertical)
-            textureOffsetX = (int)rays[x].wallHitY % TILE_SIZE;
-        else
-            textureOffsetX = (int)rays[x].wallHitX % TILE_SIZE;
+        int textureOffsetX = calculateTextureOffsetX(rayIndex);
 
-        // Loop through pixels in the wall strip
-        for (y = wallTopPixel; y < wallBottomPixel; y++)
-        {
-            distanceFromTop = y + (wallStripHeight / 2) - (WINDOW_HEIGHT / 2);
-            textureOffsetY = distanceFromTop * ((float)texture_height / wallStripHeight);
-            // Get texel color from texture buffer
-            texelColor = wallTextures[texNum].texture_buffer[(texture_width * textureOffsetY) + textureOffsetX];
-            // Darken color if the wall was hit vertically
-            if (rays[x].wasHitVertical)
-                changeColorIntensity(&texelColor, 0.5);
-            // Draw pixel on the screen
-            drawPixel(x, y, texelColor);
-        }
+        renderWallStrip(rayIndex, wallTopPixel, wallBottomPixel, textureOffsetX, textureNum, textureWidth, textureHeight, projectedWallHeight, wallStripHeight);
+    }
+}
+
+float calculatePerpendicularDistance(int rayIndex) {
+    return rays[rayIndex].distance * cos(rays[rayIndex].rayAngle - player.rotationAngle);
+}
+
+float calculateProjectedWallHeight(float perpDistance) {
+    return (TILE_SIZE / perpDistance) * PROJECTION_PLANE;
+}
+
+void calculateWallStripPixels(float projectedWallHeight, int *wallTopPixel, int *wallBottomPixel) {
+    *wallTopPixel = (WINDOW_HEIGHT / 2) - ((int)projectedWallHeight / 2);
+    *wallTopPixel = *wallTopPixel < 0 ? 0 : *wallTopPixel;
+    *wallBottomPixel = (WINDOW_HEIGHT / 2) + ((int)projectedWallHeight / 2);
+    *wallBottomPixel = *wallBottomPixel > WINDOW_HEIGHT ? WINDOW_HEIGHT : *wallBottomPixel;
+}
+
+int calculateTextureOffsetX(int rayIndex) {
+    if (rays[rayIndex].wasHitVertical)
+        return (int)rays[rayIndex].wallHitY % TILE_SIZE;
+    else
+        return (int)rays[rayIndex].wallHitX % TILE_SIZE;
+}
+
+
+void renderWallStrip(int rayIndex, int wallTopPixel, int wallBottomPixel, int textureOffsetX, int textureNum, int textureWidth, int textureHeight, float projectedWallHeight, int wallStripHeight) {
+    for (int y = wallTopPixel; y < wallBottomPixel; y++) {
+        int distanceFromTop = y + ((int)projectedWallHeight / 2) - (WINDOW_HEIGHT / 2);
+        int textureOffsetY = distanceFromTop * ((float)textureHeight / wallStripHeight);
+
+        texelColor = wallTextures[textureNum].texture_buffer[(textureWidth * textureOffsetY) + textureOffsetX];
+
+        if (rays[rayIndex].wasHitVertical)
+            adjustColorIntensity(&texelColor, 0.5);
+
+        drawPixel(rayIndex, y, texelColor);
     }
 }
 
 
 
 /**
- * changeColorIntensity - change color intensity
- * based on a factor value between 0 and 1
- * @factor: intensity factor
- * @color: color for intensity
-*/
-void changeColorIntensity(color_t *color, float factor)
+ * adjustColorIntensity - Adjust the intensity of a color by a given factor
+ * @color: Pointer to the color to be adjusted
+ * @factor: Factor by which to adjust the color intensity
+ */
+void adjustColorIntensity(color_t *color, float factor)
 {
-	color_t a = (*color & 0xFF000000);
-	color_t r = (*color & 0x00FF0000) * factor;
-	color_t g = (*color & 0x0000FF00) * factor;
-	color_t b = (*color & 0x000000FF) * factor;
+	color_t alpha = (*color & 0xFF000000);
+	color_t red = (*color & 0x00FF0000) * factor;
+	color_t green = (*color & 0x0000FF00) * factor;
+	color_t blue = (*color & 0x000000FF) * factor;
 
-	*color = a | (r & 0x00FF0000) | (g & 0x0000FF00) | (b & 0x000000FF);
+	*color = alpha | (red & 0x00FF0000) | (green & 0x0000FF00) | (blue & 0x000000FF);
 }

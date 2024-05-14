@@ -5,6 +5,7 @@ static const char *floorTextureFileNames[NUM_FLOOR_TEXTURES] = {
 	"./images/64x64-floor.png",
 };
 
+
 // Function to load floor textures
 void loadFloorTextures(void) {
 	for (int i = 0; i < NUM_FLOOR_TEXTURES; i++) {
@@ -18,6 +19,7 @@ void loadFloorTextures(void) {
 	}
 }
 
+
 void freeFloorTextures(void) {
 	for (int i = 0; i < NUM_CEILING_TEXTURES; i++) {
 		if (floorTextures[i].upngTexture != NULL) {
@@ -28,38 +30,51 @@ void freeFloorTextures(void) {
 }
 
 
-// Function to render floor projection
-
-
 /**
  * renderFloor - render floor projection
  *
  * @WallBottomPixel: wall bottom pixel
  * @texelColor: texture color for current pixel
- * @x: current element in the rays array
+ * @rayIndex: current element in the rays array
 */
-void renderFloor(int wallBottomPixel, color_t *texelColor, int x) {
-    int y, texture_height, texture_width, textureOffsetY, textureOffsetX;
-    float distance, ratio;
+void renderFloor(int wallBottomPixel, color_t *texelColor, int rayIndex) {
+    int textureWidth, textureHeight;
+    getFloorTextureDimensions(&textureWidth, &textureHeight);
 
-    texture_width = floorTextures[0].width;
-    texture_height = floorTextures[0].height;
+    for (int y = wallBottomPixel - 1; y < WINDOW_HEIGHT; y++) {
+        float distance = calculateFloorDistance(y, rayIndex);
 
-    for (y = wallBottomPixel - 1; y < WINDOW_HEIGHT; y++) {
-        ratio = player.height / (y - WINDOW_HEIGHT / 2);
-        distance = (ratio * PROJECTION_PLANE) / cos(rays[x].rayAngle - player.rotationAngle);
+        int textureOffsetX, textureOffsetY;
+        calculateFloorTextureOffsets(distance, rayIndex, &textureOffsetX, &textureOffsetY, textureWidth, textureHeight);
 
-        // Calculate texture offsets
-        textureOffsetY = (int)abs((distance * sin(rays[x].rayAngle)) + player.y);
-        textureOffsetX = (int)abs((distance * cos(rays[x].rayAngle)) + player.x);
+        fetchFloorTexelColor(texelColor, textureOffsetX, textureOffsetY, textureWidth, textureHeight);
 
-        textureOffsetX = (int)(abs(textureOffsetX * texture_width / 30) % texture_width);
-        textureOffsetY = (int)(abs(textureOffsetY * texture_height / 30) % texture_height);
-
-        // Fetch texel color from the floor texture buffer
-        *texelColor = floorTextures[0].texture_buffer[(texture_width * textureOffsetY) + textureOffsetX];
-
-        // Draw texel color on the screen
-        drawPixel(x, y, *texelColor);
+        drawPixel(rayIndex, y, *texelColor);
     }
+}
+
+
+void getFloorTextureDimensions(int *textureWidth, int *textureHeight) {
+    *textureWidth = floorTextures[0].width;
+    *textureHeight = floorTextures[0].height;
+}
+
+
+float calculateFloorDistance(int screenHeight, int rayIndex) {
+    float ratio = player.height / (screenHeight - WINDOW_HEIGHT / 2);
+    return (ratio * PROJECTION_PLANE) / cos(rays[rayIndex].rayAngle - player.rotationAngle);
+}
+
+
+void calculateFloorTextureOffsets(float distance, int rayIndex, int *textureOffsetX, int *textureOffsetY, int textureWidth, int textureHeight) {
+    *textureOffsetY = (int)abs((distance * sin(rays[rayIndex].rayAngle)) + player.y);
+    *textureOffsetX = (int)abs((distance * cos(rays[rayIndex].rayAngle)) + player.x);
+
+    *textureOffsetX = (int)(abs(*textureOffsetX * textureWidth / 30) % textureWidth);
+    *textureOffsetY = (int)(abs(*textureOffsetY * textureHeight / 30) % textureHeight);
+}
+
+
+void fetchFloorTexelColor(color_t *texelColor, int textureOffsetX, int textureOffsetY, int textureWidth, int textureHeight) {
+    *texelColor = floorTextures[0].texture_buffer[(textureWidth * textureOffsetY) + textureOffsetX];
 }

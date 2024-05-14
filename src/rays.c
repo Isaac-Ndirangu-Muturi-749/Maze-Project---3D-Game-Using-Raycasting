@@ -101,45 +101,25 @@ void renderRays(void)
  * @rayAngle: current ray angle
  *
  */
-void vertIntersection(float rayAngle)
-{
-	float nextVertTouchX, nextVertTouchY;
-	float xintercept, yintercept, xstep, ystep;
+void vertIntersection(float rayAngle) {
+    float nextVertTouchX, nextVertTouchY, xintercept, yintercept, xstep, ystep;
 
-	foundVertWallHit = false;
-	vertWallHitX = 0;
-	vertWallHitY = 0;
-	vertWallContent = 0;
+    foundVertWallHit = false;
+    vertWallHitX = vertWallHitY = vertWallContent = 0;
 
-	xintercept = floor(player.x / TILE_SIZE) * TILE_SIZE;
-	xintercept += isRayFacingRight(rayAngle) ? TILE_SIZE : 0;
-	yintercept = player.y + (xintercept - player.x) * tan(rayAngle);
+    calculateVerticalIntercept(rayAngle, &xintercept, &yintercept, &xstep, &ystep);
 
-	xstep = TILE_SIZE;
-	xstep *= isRayFacingLeft(rayAngle) ? -1 : 1;
-	ystep = TILE_SIZE * tan(rayAngle);
-	ystep *= (isRayFacingUp(rayAngle) && ystep > 0) ? -1 : 1;
-	ystep *= (isRayFacingDown(rayAngle) && ystep < 0) ? -1 : 1;
-	nextVertTouchX = xintercept;
-	nextVertTouchY = yintercept;
+    nextVertTouchX = xintercept;
+    nextVertTouchY = yintercept;
 
-	while (isInsideMap(nextVertTouchX, nextVertTouchY))
-	{
-		float xToCheck = nextVertTouchX + (isRayFacingLeft(rayAngle) ? -1 : 0);
-		float yToCheck = nextVertTouchY;
-
-		if (DetectCollision(xToCheck, yToCheck))
-		{
-			vertWallHitX = nextVertTouchX;
-			vertWallHitY = nextVertTouchY;
-			vertWallContent = getMapValue((int)floor(yToCheck / TILE_SIZE),
-									   (int)floor(xToCheck / TILE_SIZE));
-			foundVertWallHit = true;
-			break;
-		}
-		nextVertTouchX += xstep;
-		nextVertTouchY += ystep;
-	}
+    while (isInsideMap(nextVertTouchX, nextVertTouchY)) {
+        if (checkVerticalWallCollision(nextVertTouchX, nextVertTouchY, rayAngle)) {
+            foundVertWallHit = true;
+            break;
+        }
+        nextVertTouchX += xstep;
+        nextVertTouchY += ystep;
+    }
 }
 
 
@@ -148,43 +128,25 @@ void vertIntersection(float rayAngle)
  * @rayAngle: current ray angle
  *
  */
-void horzIntersection(float rayAngle)
-{
-	float nextHorzTouchX, nextHorzTouchY, xintercept, yintercept, xstep, ystep;
+void horzIntersection(float rayAngle) {
+    float nextHorzTouchX, nextHorzTouchY, xintercept, yintercept, xstep, ystep;
 
-	foundHorzWallHit = false;
-	horzWallHitX = horzWallHitY = horzWallContent = 0;
+    foundHorzWallHit = false;
+    horzWallHitX = horzWallHitY = horzWallContent = 0;
 
-	yintercept = floor(player.y / TILE_SIZE) * TILE_SIZE;
-	yintercept += isRayFacingDown(rayAngle) ? TILE_SIZE : 0;
+    calculateHorizontalIntercept(rayAngle, &xintercept, &yintercept, &xstep, &ystep);
 
-	xintercept = player.x + (yintercept - player.y) / tan(rayAngle);
+    nextHorzTouchX = xintercept;
+    nextHorzTouchY = yintercept;
 
-	ystep = TILE_SIZE;
-	ystep *= isRayFacingUp(rayAngle) ? -1 : 1;
-	xstep = TILE_SIZE / tan(rayAngle);
-	xstep *= (isRayFacingLeft(rayAngle) && xstep > 0) ? -1 : 1;
-	xstep *= (isRayFacingRight(rayAngle) && xstep < 0) ? -1 : 1;
-	nextHorzTouchX = xintercept;
-	nextHorzTouchY = yintercept;
-
-	while (isInsideMap(nextHorzTouchX, nextHorzTouchY))
-	{
-		float xToCheck = nextHorzTouchX;
-		float yToCheck = nextHorzTouchY + (isRayFacingUp(rayAngle) ? -1 : 0);
-
-		if (DetectCollision(xToCheck, yToCheck))
-		{
-			horzWallHitX = nextHorzTouchX;
-			horzWallHitY = nextHorzTouchY;
-			horzWallContent = getMapValue((int)floor(yToCheck / TILE_SIZE),
-									   (int)floor(xToCheck / TILE_SIZE));
-			foundHorzWallHit = true;
-			break;
-		}
-		nextHorzTouchX += xstep;
-		nextHorzTouchY += ystep;
-	}
+    while (isInsideMap(nextHorzTouchX, nextHorzTouchY)) {
+        if (checkHorizontalWallCollision(nextHorzTouchX, nextHorzTouchY, rayAngle)) {
+            foundHorzWallHit = true;
+            break;
+        }
+        nextHorzTouchX += xstep;
+        nextHorzTouchY += ystep;
+    }
 }
 
 
@@ -231,4 +193,58 @@ bool isRayFacingRight(float angle)
 bool isRayFacingLeft(float angle)
 {
 	return (!isRayFacingRight(angle));
+}
+
+
+void calculateHorizontalIntercept(float rayAngle, float *xintercept, float *yintercept, float *xstep, float *ystep) {
+    *yintercept = floor(player.y / TILE_SIZE) * TILE_SIZE;
+    *yintercept += isRayFacingDown(rayAngle) ? TILE_SIZE : 0;
+
+    *xintercept = player.x + (*yintercept - player.y) / tan(rayAngle);
+
+    *ystep = TILE_SIZE;
+    *ystep *= isRayFacingUp(rayAngle) ? -1 : 1;
+    *xstep = TILE_SIZE / tan(rayAngle);
+    *xstep *= (isRayFacingLeft(rayAngle) && *xstep > 0) ? -1 : 1;
+    *xstep *= (isRayFacingRight(rayAngle) && *xstep < 0) ? -1 : 1;
+}
+
+bool checkHorizontalWallCollision(float xToCheck, float yToCheck, float rayAngle) {
+    float wallX = xToCheck;
+    float wallY = yToCheck + (isRayFacingUp(rayAngle) ? -1 : 0);
+
+    if (DetectCollision(wallX, wallY)) {
+        horzWallHitX = xToCheck;
+        horzWallHitY = yToCheck;
+        horzWallContent = getMapValue((int)floor(wallY / TILE_SIZE), (int)floor(wallX / TILE_SIZE));
+        return true;
+    }
+    return false;
+}
+
+
+void calculateVerticalIntercept(float rayAngle, float *xintercept, float *yintercept, float *xstep, float *ystep) {
+    *xintercept = floor(player.x / TILE_SIZE) * TILE_SIZE;
+    *xintercept += isRayFacingRight(rayAngle) ? TILE_SIZE : 0;
+    *yintercept = player.y + (*xintercept - player.x) * tan(rayAngle);
+
+    *xstep = TILE_SIZE;
+    *xstep *= isRayFacingLeft(rayAngle) ? -1 : 1;
+    *ystep = TILE_SIZE * tan(rayAngle);
+    *ystep *= (isRayFacingUp(rayAngle) && *ystep > 0) ? -1 : 1;
+    *ystep *= (isRayFacingDown(rayAngle) && *ystep < 0) ? -1 : 1;
+}
+
+
+bool checkVerticalWallCollision(float xToCheck, float yToCheck, float rayAngle) {
+    float wallX = xToCheck + (isRayFacingLeft(rayAngle) ? -1 : 0);
+    float wallY = yToCheck;
+
+    if (DetectCollision(wallX, wallY)) {
+        vertWallHitX = xToCheck;
+        vertWallHitY = yToCheck;
+        vertWallContent = getMapValue((int)floor(wallY / TILE_SIZE), (int)floor(wallX / TILE_SIZE));
+        return true;
+    }
+    return false;
 }

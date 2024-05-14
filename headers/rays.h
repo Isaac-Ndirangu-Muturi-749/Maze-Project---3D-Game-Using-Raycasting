@@ -53,6 +53,12 @@ bool isRayFacingUp(float angle);
 bool isRayFacingRight(float angle);
 bool isRayFacingLeft(float angle);
 
+void calculateHorizontalIntercept(float rayAngle, float *xintercept, float *yintercept, float *xstep, float *ystep);
+bool checkHorizontalWallCollision(float xToCheck, float yToCheck, float rayAngle);
+
+void calculateVerticalIntercept(float rayAngle, float *xintercept, float *yintercept, float *xstep, float *ystep);
+bool checkVerticalWallCollision(float xToCheck, float yToCheck, float rayAngle);
+
 
 extern ray_t rays[NUM_RAYS];
 
